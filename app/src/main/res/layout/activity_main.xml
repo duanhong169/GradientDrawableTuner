@@ -40,6 +40,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <RadioGroup
+                    android:id="@+id/shape"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:checkedButton="@{viewModel.drawableProperties.shapeId}"
+                    android:onCheckedChanged="@{(radioGroup, id) -> viewModel.shapeIdChanged(id)}">
+
+                    <RadioButton
+                        android:id="@+id/rectangle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="rectangle"/>
+
+                    <RadioButton
+                        android:id="@+id/oval"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="oval"/>
+
+                    <RadioButton
+                        android:id="@+id/line"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="line"/>
+
+                    <RadioButton
+                        android:id="@+id/ring"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ring"/>
+                </RadioGroup>
+
                 <com.google.android.flexbox.FlexboxLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -53,6 +87,14 @@
                         android:text="stroke color"
                         app:onColorChange="@{(v, color) -> viewModel.strokeColorChanged(color)}"
                         app:color="@{viewModel.drawableProperties.strokeColor}"/>
+
+                    <top.defaults.gradientdrawabletuner.ColorIndicator
+                        android:id="@+id/solidColor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="solid color"
+                        app:onColorChange="@{(v, color) -> viewModel.solidColorChanged(color)}"
+                        app:color="@{viewModel.drawableProperties.solidColor}"/>
 
                 </com.google.android.flexbox.FlexboxLayout>
 

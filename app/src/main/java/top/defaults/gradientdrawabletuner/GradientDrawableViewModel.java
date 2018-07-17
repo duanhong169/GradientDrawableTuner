@@ -23,7 +23,8 @@ public class GradientDrawableViewModel extends AndroidViewModel {
             if (drawable == null) drawable = new GradientDrawable();
             if (properties == null) properties = new GradientDrawableProperties();
 
-            drawable.setColor(properties.color);
+            drawable.setShape(properties.shape);
+            drawable.setColor(properties.solidColor);
             drawable.setStroke(properties.strokeWidth, properties.strokeColor);
             drawable.setCornerRadius(dpToPx(properties.radius));
             gradientDrawable.setValue(drawable);
@@ -39,12 +40,20 @@ public class GradientDrawableViewModel extends AndroidViewModel {
         return drawableProperties;
     }
 
+    public void shapeIdChanged(int shapeId) {
+        updateProperties(properties -> properties.setShapeById(shapeId));
+    }
+
     public void radiusChanged(int radius) {
         updateProperties(properties -> properties.radius = radius);
     }
 
     public void strokeColorChanged(int color) {
         updateProperties(properties -> properties.strokeColor = color);
+    }
+
+    public void solidColorChanged(int color) {
+        updateProperties(properties -> properties.solidColor = color);
     }
 
     private interface Callback<T> {
