@@ -21,7 +21,7 @@ public class GradientDrawableProperties {
         idToShapeMap.put(R.id.ring, GradientDrawable.RING);
     }
 
-    public int shape = GradientDrawable.OVAL;
+    public int shape = GradientDrawable.RECTANGLE;
     public int getShapeId() {
         return shapeToIdMap.get(shape);
     }
@@ -29,9 +29,15 @@ public class GradientDrawableProperties {
         shape = idToShapeMap.get(id);
     }
 
+    // all dimens are in dp
+    public int innerRadius = 0;
+    public float innerRadiusRatio = 0;
+    public int thickness = 0;
+    public float thicknessRatio = 0;
+    public int cornerRadius = 0;
+    public int width = 100;
+    public int height = 100;
     public int solidColor = Color.WHITE;
-    public int radius = 0; // in dp
-
     public int strokeWidth = 1;
     public int strokeColor = Color.RED;
 }
