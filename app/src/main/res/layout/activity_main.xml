@@ -47,9 +47,12 @@
                     app:alignItems="flex_start" >
 
                     <top.defaults.gradientdrawabletuner.ColorIndicator
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@{viewModel.drawableProperties.strokeColor}"/>
+                        android:id="@+id/strokeColor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="stroke color"
+                        app:onColorChange="@{(v, color) -> viewModel.strokeColorChanged(color)}"
+                        app:color="@{viewModel.drawableProperties.strokeColor}"/>
 
                 </com.google.android.flexbox.FlexboxLayout>
 

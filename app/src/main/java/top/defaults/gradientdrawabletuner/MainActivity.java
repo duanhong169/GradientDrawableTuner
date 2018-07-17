@@ -5,10 +5,14 @@ import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.defaults.gradientdrawabletuner.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
+
+    @BindView(R.id.strokeColor) ColorIndicator strokeColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
