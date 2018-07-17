@@ -5,6 +5,7 @@ import android.databinding.BindingAdapter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
@@ -15,6 +16,7 @@ import top.defaults.view.ColorPickerPopup;
 public class ColorIndicator extends AppCompatTextView {
 
     private int indicatorSize;
+    private int currentColor;
 
     public ColorIndicator(Context context) {
         this(context, null);
@@ -30,7 +32,7 @@ public class ColorIndicator extends AppCompatTextView {
         indicatorSize = (int) (20 * density);
         int drawablePadding = (int) (6 * density);
         setCompoundDrawablePadding(drawablePadding);
-        int padding = (int) (8 * density);
+        int padding = (int) (6 * density);
         setPadding(padding, padding, padding, padding);
         setGravity(Gravity.CENTER);
         setOnClickListener(v -> {
@@ -54,17 +56,16 @@ public class ColorIndicator extends AppCompatTextView {
     }
 
     public void setColor(int color) {
-        ColorDrawable left = new ColorDrawable(color);
+        currentColor = color;
+        GradientDrawable left = new GradientDrawable();
+        left.setColor(currentColor);
+        left.setCornerRadius(indicatorSize / 2);
+        left.setStroke(1, Color.LTGRAY);
         left.setBounds(0, 0, indicatorSize, indicatorSize);
         setCompoundDrawables(left, null, null, null);
     }
 
     public int getColor() {
-        Drawable indicator = getCompoundDrawables()[0];
-        int currentColor = Color.WHITE;
-        if (indicator instanceof ColorDrawable) {
-            currentColor = ((ColorDrawable) indicator).getColor();
-        }
         return currentColor;
     }
 
