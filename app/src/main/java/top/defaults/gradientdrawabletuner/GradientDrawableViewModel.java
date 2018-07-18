@@ -7,7 +7,12 @@ import android.arch.lifecycle.MutableLiveData;
 import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.TypedValue;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class GradientDrawableViewModel extends AndroidViewModel {
 
@@ -41,42 +46,52 @@ public class GradientDrawableViewModel extends AndroidViewModel {
         return drawableProperties;
     }
 
-    public void shapeIdChanged(int shapeId) {
-        updateProperties(properties -> properties.setShapeById(shapeId));
-    }
-
-    public void cornerRadiusChanged(int radius) {
-        updateProperties(properties -> properties.cornerRadius = radius);
-    }
-
-    public void widthChanged(int width) {
-        updateProperties(properties -> properties.width = width);
-    }
-
-    public void heightChanged(int height) {
-        updateProperties(properties -> properties.height = height);
-    }
-
-    public void strokeColorChanged(int color) {
-        updateProperties(properties -> properties.strokeColor = color);
-    }
-
-    public void solidColorChanged(int color) {
-        updateProperties(properties -> properties.solidColor = color);
-    }
-
-    private interface Callback<T> {
+    public interface Callback<T> {
         void onData(T data);
     }
 
-    private void updateProperties(Callback<GradientDrawableProperties> callback) {
+    public void updateProperty(String propertyName, Object value) {
+        try {
+            Field field = GradientDrawableProperties.class.getField(propertyName);
+            updateProperties(properties -> {
+                try {
+                    field.setAccessible(true);
+                    field.set(properties, value);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (NoSuchFieldException e) {
+            try {
+                Method method = GradientDrawableProperties.class.getMethod(setter(propertyName), value.getClass());
+                updateProperties(properties -> {
+                    try {
+                        method.invoke(properties, value);
+                    } catch (IllegalAccessException e1) {
+                        e1.printStackTrace();
+                    } catch (InvocationTargetException e1) {
+                        e1.printStackTrace();
+                    }
+                });
+            } catch (NoSuchMethodException ignored) {
+
+            }
+        }
+    }
+
+    private String setter(String field) {
+        if (TextUtils.isEmpty(field)) return null;
+        return "set" + (field.substring(0, 1).toUpperCase() + field.substring(1));
+    }
+
+    public void updateProperties(Callback<GradientDrawableProperties> callback) {
         GradientDrawableProperties properties = drawableProperties.getValue();
         if (properties == null) properties = new GradientDrawableProperties();
         callback.onData(properties);
         drawableProperties.setValue(properties);
     }
 
-    public float dpToPx(int dp) {
+    private float dpToPx(int dp) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
     }
 }

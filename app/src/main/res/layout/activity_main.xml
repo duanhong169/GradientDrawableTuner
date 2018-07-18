@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -47,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:checkedButton="@{viewModel.drawableProperties.shapeId}"
-                    android:onCheckedChanged="@{(radioGroup, id) -> viewModel.shapeIdChanged(id)}">
+                    android:onCheckedChanged='@{(radioGroup, id) -> viewModel.updateProperty("shapeId", id)}'>
 
                     <RadioButton
                         android:id="@+id/rectangle"
@@ -85,7 +84,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="stroke color"
-                        app:onColorChange="@{(v, color) -> viewModel.strokeColorChanged(color)}"
+                        app:onColorChange='@{(v, color) -> viewModel.updateProperty("strokeColor", color)}'
                         app:color="@{viewModel.drawableProperties.strokeColor}"/>
 
                     <top.defaults.gradientdrawabletuner.ColorIndicator
@@ -93,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="solid color"
-                        app:onColorChange="@{(v, color) -> viewModel.solidColorChanged(color)}"
+                        app:onColorChange='@{(v, color) -> viewModel.updateProperty("solidColor", color)}'
                         app:color="@{viewModel.drawableProperties.solidColor}"/>
 
                 </com.google.android.flexbox.FlexboxLayout>
@@ -113,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:max="@{safeUnbox(maxWidthDp)}"
                         android:progress="@{viewModel.drawableProperties.width}"
-                        android:onProgressChanged="@{(seekBar, i, b) -> viewModel.widthChanged(i)}"
+                        android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("width", i)}'
                         app:layout_constraintStart_toEndOf="@id/widthTitle"
                         app:layout_constraintTop_toTopOf="@id/widthTitle"
                         app:layout_constraintBottom_toBottomOf="@id/widthTitle"
@@ -133,7 +132,7 @@
                         android:layout_height="wrap_content"
                         android:max="@{safeUnbox(maxHeightDp)}"
                         android:progress="@{viewModel.drawableProperties.height}"
-                        android:onProgressChanged="@{(seekBar, i, b) -> viewModel.heightChanged(i)}"
+                        android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("height", i)}'
                         app:layout_constraintStart_toEndOf="@id/heightTitle"
                         app:layout_constraintTop_toTopOf="@id/heightTitle"
                         app:layout_constraintBottom_toBottomOf="@id/heightTitle"
@@ -153,7 +152,7 @@
                         android:layout_height="wrap_content"
                         android:max="@{viewModel.drawableProperties.width / 2}"
                         android:progress="@{viewModel.drawableProperties.cornerRadius}"
-                        android:onProgressChanged="@{(seekBar, i, b) -> viewModel.cornerRadiusChanged(i)}"
+                        android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("cornerRadius", i)}'
                         app:layout_constraintStart_toEndOf="@id/radiusTitle"
                         app:layout_constraintTop_toTopOf="@id/radiusTitle"
                         app:layout_constraintBottom_toBottomOf="@id/radiusTitle"

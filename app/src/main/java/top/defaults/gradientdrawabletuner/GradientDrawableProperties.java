@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.util.SparseIntArray;
 
+import top.defaults.annotations.AutoProperty;
+
 public class GradientDrawableProperties {
 
     private static SparseIntArray shapeToIdMap = new SparseIntArray();
@@ -21,23 +23,23 @@ public class GradientDrawableProperties {
         idToShapeMap.put(R.id.ring, GradientDrawable.RING);
     }
 
-    public int shape = GradientDrawable.RECTANGLE;
+    @AutoProperty("shapeId") public int shape = GradientDrawable.RECTANGLE;
     public int getShapeId() {
         return shapeToIdMap.get(shape);
     }
-    public void setShapeById(int id) {
+    public void setShapeId(Integer id) {
         shape = idToShapeMap.get(id);
     }
 
     // all dimens are in dp
-    public int innerRadius = 0;
-    public float innerRadiusRatio = 0;
-    public int thickness = 0;
-    public float thicknessRatio = 0;
-    public int cornerRadius = 0;
-    public int width = 100;
-    public int height = 100;
-    public int solidColor = Color.WHITE;
-    public int strokeWidth = 1;
-    public int strokeColor = Color.RED;
+    @AutoProperty public int innerRadius = 0;
+    @AutoProperty public float innerRadiusRatio = 0;
+    @AutoProperty public int thickness = 0;
+    @AutoProperty public float thicknessRatio = 0;
+    @AutoProperty public int cornerRadius = 0;
+    @AutoProperty public int width = 100;
+    @AutoProperty public int height = 100;
+    @AutoProperty public int solidColor = Color.WHITE;
+    @AutoProperty public int strokeWidth = 1;
+    @AutoProperty public int strokeColor = Color.RED;
 }
