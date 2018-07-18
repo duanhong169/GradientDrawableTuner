@@ -38,6 +38,7 @@ public class ColorIndicator extends AppCompatTextView {
         setOnClickListener(v -> {
             ColorPickerPopup popup = new ColorPickerPopup.Builder(context)
                     .initialColor(getColor())
+                    .enableAlpha(true)
                     .build();
             popup.show(v, new ColorPickerPopup.ColorPickerObserver() {
                 @Override

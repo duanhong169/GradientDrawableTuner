@@ -29,8 +29,8 @@ public class GradientDrawableViewModel extends AndroidViewModel {
             if (properties == null) properties = new GradientDrawableProperties();
 
             drawable.setShape(properties.shape);
-            drawable.setCornerRadius(dpToPx(properties.cornerRadius));
-            drawable.setSize((int)dpToPx(properties.width), (int)dpToPx(properties.height));
+            drawable.setCornerRadius(properties.cornerRadius);
+            drawable.setSize(properties.width + properties.strokeWidth, properties.height + properties.strokeWidth);
             drawable.setColor(properties.solidColor);
             drawable.setStroke(properties.strokeWidth, properties.strokeColor);
             gradientDrawable.setValue(drawable);
@@ -91,6 +91,7 @@ public class GradientDrawableViewModel extends AndroidViewModel {
         drawableProperties.setValue(properties);
     }
 
+    @SuppressWarnings("unused")
     private float dpToPx(int dp) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
     }

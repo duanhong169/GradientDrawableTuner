@@ -16,7 +16,6 @@ import top.defaults.gradientdrawabletuner.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.imageView) ImageView imageView;
-    @BindView(R.id.strokeColor) ColorIndicator strokeColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,25 +25,33 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         ButterKnife.bind(this);
         binding.setLifecycleOwner(this);
-        binding.setViewModel(viewModel);
 
         Resources resources = getResources();
         float density = resources.getDisplayMetrics().density;
-        final int maxWidthDp = (int) (resources.getDisplayMetrics().widthPixels / density / 1.5);
-        binding.setMaxWidthDp(maxWidthDp);
-        final int maxHeightDp = (int) (resources.getDisplayMetrics().heightPixels / density / 1.5);
-        binding.setMaxHeightDp(maxHeightDp);
+        final int maxWidth = (int) (resources.getDisplayMetrics().widthPixels / 2.5);
+        binding.setMaxWidth(maxWidth);
+        final int maxHeight = (int) (resources.getDisplayMetrics().heightPixels / 2.5);
+        binding.setMaxHeight(maxHeight);
+
+        binding.setViewModel(viewModel);
 
         viewModel.getDrawableProperties().observe(this, properties -> {
             if (properties != null) {
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        (int) (properties.width * density),
-                        (int) (properties.height * density));
+                        properties.width + properties.strokeWidth,
+                        properties.height + properties.strokeWidth);
                 params.gravity = Gravity.CENTER_HORIZONTAL;
                 int margin = (int) (8 * density);
                 params.setMargins(margin, margin, margin, 0);
                 imageView.setLayoutParams(params);
             }
         });
+
+        // Set initial width/height here, because data binding's SeekBar will
+        // fire a progress update to 100 when initialing
+        imageView.post(() -> viewModel.updateProperties(properties -> {
+            properties.width = 400;
+            properties.height = 400;
+        }));
     }
 }

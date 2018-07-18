@@ -7,10 +7,10 @@
             name="viewModel"
             type="top.defaults.gradientdrawabletuner.GradientDrawableViewModel"/>
         <variable
-            name="maxWidthDp"
+            name="maxWidth"
             type="Integer"/>
         <variable
-            name="maxHeightDp"
+            name="maxHeight"
             type="Integer"/>
     </data>
 
@@ -110,7 +110,7 @@
                     <SeekBar
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:max="@{safeUnbox(maxWidthDp)}"
+                        android:max="@{safeUnbox(maxWidth)}"
                         android:progress="@{viewModel.drawableProperties.width}"
                         android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("width", i)}'
                         app:layout_constraintStart_toEndOf="@id/widthTitle"
@@ -130,7 +130,7 @@
                     <SeekBar
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:max="@{safeUnbox(maxHeightDp)}"
+                        android:max="@{safeUnbox(maxHeight)}"
                         android:progress="@{viewModel.drawableProperties.height}"
                         android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("height", i)}'
                         app:layout_constraintStart_toEndOf="@id/heightTitle"
@@ -156,6 +156,26 @@
                         app:layout_constraintStart_toEndOf="@id/radiusTitle"
                         app:layout_constraintTop_toTopOf="@id/radiusTitle"
                         app:layout_constraintBottom_toBottomOf="@id/radiusTitle"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/strokeWidthTitle"
+                        android:layout_width="80sp"
+                        android:layout_height="wrap_content"
+                        android:text='@{"stroke width: " + (int)viewModel.drawableProperties.strokeWidth}'
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/radiusTitle"/>
+
+                    <SeekBar
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:max="@{viewModel.drawableProperties.width / 2}"
+                        android:progress="@{viewModel.drawableProperties.strokeWidth}"
+                        android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("strokeWidth", i)}'
+                        app:layout_constraintStart_toEndOf="@id/strokeWidthTitle"
+                        app:layout_constraintTop_toTopOf="@id/strokeWidthTitle"
+                        app:layout_constraintBottom_toBottomOf="@id/strokeWidthTitle"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
                 </android.support.constraint.ConstraintLayout>
