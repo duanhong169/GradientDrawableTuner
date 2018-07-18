@@ -43,5 +43,5 @@ public class GradientDrawableProperties {
     @AutoProperty public int height = 0;
     @AutoProperty public int solidColor = Color.WHITE;
     @AutoProperty public int strokeWidth = 1;
-    @AutoProperty public int strokeColor = Color.RED;
+    @AutoProperty public int strokeColor = 0xFF2DCFCA;
 }
