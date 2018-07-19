@@ -30,8 +30,7 @@
             android:clickable="true"
             android:focusable="true"
             android:adjustViewBounds="true"
-            android:src="@{viewModel.gradientDrawable}"
-            android:background="#f2f2f2"/>
+            android:src="@{viewModel.gradientDrawable}"/>
 
         <ScrollView
             android:layout_width="match_parent"

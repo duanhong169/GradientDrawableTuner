@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.defaults.gradientdrawabletuner.databinding.ActivityMainBinding;
+import top.defaults.view.CheckerboardDrawable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
         binding.setMaxWidth(maxWidth);
         final int maxHeight = (int) (resources.getDisplayMetrics().heightPixels / 2.5);
         binding.setMaxHeight(maxHeight);
-
         binding.setViewModel(viewModel);
+
+        CheckerboardDrawable drawable = new CheckerboardDrawable.Builder()
+                .size(30).build();
+        imageView.setBackgroundDrawable(drawable);
 
         viewModel.getDrawableProperties().observe(this, properties -> {
             if (properties != null) {
