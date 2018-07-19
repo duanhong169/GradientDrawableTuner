@@ -3,6 +3,7 @@ package top.defaults.gradientdrawabletuner;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -37,9 +38,14 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel.getDrawableProperties().observe(this, properties -> {
             if (properties != null) {
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        properties.width + properties.strokeWidth,
-                        properties.height + properties.strokeWidth);
+                int width = properties.width;
+                int height = properties.height;
+                // enlarge the width/height with the strokeWidth for RECTANGLE/OVAL
+                if (properties.shape == GradientDrawable.RECTANGLE || properties.shape == GradientDrawable.OVAL) {
+                    width = width + properties.strokeWidth;
+                    height = height + properties.strokeWidth;
+                }
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
                 params.gravity = Gravity.CENTER_HORIZONTAL;
                 int margin = (int) (8 * density);
                 params.setMargins(margin, margin, margin, 0);

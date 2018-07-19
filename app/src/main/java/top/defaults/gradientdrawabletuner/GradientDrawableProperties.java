@@ -23,7 +23,7 @@ public class GradientDrawableProperties {
         idToShapeMap.put(R.id.ring, GradientDrawable.RING);
     }
 
-    @AutoProperty("shapeId") public int shape = GradientDrawable.RECTANGLE;
+    @AutoProperty("shapeId") public int shape = GradientDrawable.RING;
     public int getShapeId() {
         return shapeToIdMap.get(shape);
     }
@@ -32,16 +32,16 @@ public class GradientDrawableProperties {
     }
 
     // all dimens are in pixels
-    @AutoProperty public int innerRadius = 0;
-    @AutoProperty public float innerRadiusRatio = 0;
-    @AutoProperty public int thickness = 0;
-    @AutoProperty public float thicknessRatio = 0;
+    @AutoProperty public int innerRadius = -1; // when innerRadius == -1, innerRadiusRatio become effective
+    @AutoProperty public float innerRadiusRatio = 9f;
+    @AutoProperty public int thickness = -1; // when thickness == -1, thicknessRatio become effective
+    @AutoProperty public float thicknessRatio = 3f;
     @AutoProperty public int cornerRadius = 0;
     // width & height set here will be modified to 100 by the data binding's
     // SeekBar during initializing, so we set 0 here and init them in Activity
     @AutoProperty public int width = 0;
     @AutoProperty public int height = 0;
     @AutoProperty public int solidColor = Color.WHITE;
-    @AutoProperty public int strokeWidth = 1;
+    @AutoProperty public int strokeWidth = 50;
     @AutoProperty public int strokeColor = 0xFF2DCFCA;
 }

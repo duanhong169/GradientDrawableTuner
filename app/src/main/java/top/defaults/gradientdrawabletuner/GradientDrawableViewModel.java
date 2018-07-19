@@ -28,6 +28,14 @@ public class GradientDrawableViewModel extends AndroidViewModel {
             if (drawable == null) drawable = new GradientDrawable();
             if (properties == null) properties = new GradientDrawableProperties();
 
+            if (properties.shape == GradientDrawable.RING) {
+                Reflections.setInnerRadius(drawable, properties.innerRadius);
+                Reflections.setInnerRadiusRatio(drawable, properties.innerRadiusRatio);
+                Reflections.setThickness(drawable, properties.thickness);
+                Reflections.setThicknessRatio(drawable, properties.thicknessRatio);
+                Reflections.setUseLevelForShape(drawable, false);
+            }
+
             drawable.setShape(properties.shape);
             drawable.setCornerRadius(properties.cornerRadius);
             drawable.setSize(properties.width + properties.strokeWidth, properties.height + properties.strokeWidth);

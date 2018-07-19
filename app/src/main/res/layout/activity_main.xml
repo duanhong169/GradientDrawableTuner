@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
+        <import type="top.defaults.gradientdrawabletuner.R"/>
         <variable
             name="viewModel"
             type="top.defaults.gradientdrawabletuner.GradientDrawableViewModel"/>
@@ -28,7 +30,8 @@
             android:clickable="true"
             android:focusable="true"
             android:adjustViewBounds="true"
-            android:src="@{viewModel.gradientDrawable}"/>
+            android:src="@{viewModel.gradientDrawable}"
+            android:background="#f2f2f2"/>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -99,13 +102,105 @@
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <android.support.constraint.Group
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{viewModel.drawableProperties.shapeId == R.id.ring ? View.VISIBLE : View.GONE}"
+                        app:constraint_referenced_ids="innerRadiusTitle, innerRadiusValue, innerRadiusRatioTitle, innerRadiusRatioValue, thicknessTitle, thicknessValue, thicknessRatioTitle, thicknessRatioValue"/>
+
+                    <TextView
+                        android:id="@+id/innerRadiusTitle"
+                        android:layout_width="80sp"
+                        android:layout_height="wrap_content"
+                        android:text='@{"Inner radius: " + viewModel.drawableProperties.innerRadius}'
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <SeekBar
+                        android:id="@+id/innerRadiusValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:max="@{viewModel.drawableProperties.width / 2}"
+                        android:progress="@{viewModel.drawableProperties.innerRadius + 1}"
+                        android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("innerRadius", i - 1)}'
+                        app:layout_constraintStart_toEndOf="@id/innerRadiusTitle"
+                        app:layout_constraintTop_toTopOf="@id/innerRadiusTitle"
+                        app:layout_constraintBottom_toBottomOf="@id/innerRadiusTitle"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/innerRadiusRatioTitle"
+                        android:layout_width="80sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text='@{"» Ratio: " + viewModel.drawableProperties.innerRadiusRatio}'
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/innerRadiusTitle"/>
+
+                    <SeekBar
+                        android:id="@+id/innerRadiusRatioValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:max="160"
+                        android:progress="@{(int)(viewModel.drawableProperties.innerRadiusRatio * 10 - 20)}"
+                        android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("innerRadiusRatio", (float)(i + 20) / 10f)}'
+                        app:layout_constraintStart_toEndOf="@id/innerRadiusRatioTitle"
+                        app:layout_constraintTop_toTopOf="@id/innerRadiusRatioTitle"
+                        app:layout_constraintBottom_toBottomOf="@id/innerRadiusRatioTitle"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/thicknessTitle"
+                        android:layout_width="80sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text='@{"Thickness: " + viewModel.drawableProperties.thickness}'
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/innerRadiusRatioTitle"/>
+
+                    <SeekBar
+                        android:id="@+id/thicknessValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:max="@{viewModel.drawableProperties.width / 2}"
+                        android:progress="@{viewModel.drawableProperties.thickness + 1}"
+                        android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("thickness", i - 1)}'
+                        app:layout_constraintStart_toEndOf="@id/thicknessTitle"
+                        app:layout_constraintTop_toTopOf="@id/thicknessTitle"
+                        app:layout_constraintBottom_toBottomOf="@id/thicknessTitle"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/thicknessRatioTitle"
+                        android:layout_width="80sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text='@{"» Ratio: " + viewModel.drawableProperties.thicknessRatio}'
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/thicknessTitle"/>
+
+                    <SeekBar
+                        android:id="@+id/thicknessRatioValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:max="150"
+                        android:progress="@{(int)(viewModel.drawableProperties.thicknessRatio * 10 - 10)}"
+                        android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("thicknessRatio", (float)(i + 10) / 10f)}'
+                        app:layout_constraintStart_toEndOf="@id/thicknessRatioTitle"
+                        app:layout_constraintTop_toTopOf="@id/thicknessRatioTitle"
+                        app:layout_constraintBottom_toBottomOf="@id/thicknessRatioTitle"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
                     <TextView
                         android:id="@+id/widthTitle"
                         android:layout_width="80sp"
                         android:layout_height="wrap_content"
-                        android:text='@{"Width: " + (int)viewModel.drawableProperties.width}'
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        android:layout_marginTop="8dp"
+                        android:text='@{"Width: " + viewModel.drawableProperties.width}'
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/thicknessRatioTitle"/>
 
                     <SeekBar
                         android:layout_width="0dp"
@@ -122,7 +217,7 @@
                         android:id="@+id/heightTitle"
                         android:layout_width="80sp"
                         android:layout_height="wrap_content"
-                        android:text='@{"Height: " + (int)viewModel.drawableProperties.height}'
+                        android:text='@{"Height: " + viewModel.drawableProperties.height}'
                         android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/widthTitle"/>
@@ -142,7 +237,7 @@
                         android:id="@+id/radiusTitle"
                         android:layout_width="80sp"
                         android:layout_height="wrap_content"
-                        android:text='@{"Radius: " + (int)viewModel.drawableProperties.cornerRadius}'
+                        android:text='@{"Radius: " + viewModel.drawableProperties.cornerRadius}'
                         android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/heightTitle"/>
@@ -162,7 +257,7 @@
                         android:id="@+id/strokeWidthTitle"
                         android:layout_width="80sp"
                         android:layout_height="wrap_content"
-                        android:text='@{"stroke width: " + (int)viewModel.drawableProperties.strokeWidth}'
+                        android:text='@{"stroke width: " + viewModel.drawableProperties.strokeWidth}'
                         android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/radiusTitle"/>
