@@ -108,169 +108,93 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:visibility="@{viewModel.drawableProperties.shapeId == R.id.ring ? View.VISIBLE : View.GONE}"
-                        app:constraint_referenced_ids="innerRadiusTitle, innerRadiusValue, innerRadiusRatioTitle, innerRadiusRatioValue, thicknessTitle, thicknessValue, thicknessRatioTitle, thicknessRatioValue"/>
+                        app:constraint_referenced_ids="innerRadiusRow, innerRadiusRatioRow, thicknessRow, thicknessRatioRow"/>
 
-                    <TextView
-                        android:id="@+id/innerRadiusTitle"
-                        android:layout_width="80sp"
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/innerRadiusRow"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text='@{"Inner radius: " + viewModel.drawableProperties.innerRadius}'
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:title="innerRadius"
+                        app:valueForTitle='@{viewModel.drawableProperties.innerRadius}'
+                        app:max="@{viewModel.drawableProperties.width / 2}"
+                        app:value="@{viewModel.drawableProperties.innerRadius + 1}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("innerRadius", value - 1)}'/>
 
-                    <SeekBar
-                        android:id="@+id/innerRadiusValue"
-                        android:layout_width="0dp"
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/innerRadiusRatioRow"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:max="@{viewModel.drawableProperties.width / 2}"
-                        android:progress="@{viewModel.drawableProperties.innerRadius + 1}"
-                        android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("innerRadius", i - 1)}'
-                        app:layout_constraintStart_toEndOf="@id/innerRadiusTitle"
-                        app:layout_constraintTop_toTopOf="@id/innerRadiusTitle"
-                        app:layout_constraintBottom_toBottomOf="@id/innerRadiusTitle"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:title="» ratio"
+                        app:valueForTitle='@{viewModel.drawableProperties.innerRadiusRatio}'
+                        app:max="@{viewModel.drawableProperties.width / 2}"
+                        app:value="@{(int)(viewModel.drawableProperties.innerRadiusRatio * 10 - 20)}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("innerRadiusRatio", (float)(value + 20) / 10f)}'
+                        app:layout_constraintTop_toBottomOf="@+id/innerRadiusRow"/>
 
-                    <TextView
-                        android:id="@+id/innerRadiusRatioTitle"
-                        android:layout_width="80sp"
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/thicknessRow"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text='@{"» Ratio: " + viewModel.drawableProperties.innerRadiusRatio}'
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/innerRadiusTitle"/>
+                        app:title="thickness"
+                        app:valueForTitle='@{viewModel.drawableProperties.thickness}'
+                        app:max="@{viewModel.drawableProperties.width / 2}"
+                        app:value="@{viewModel.drawableProperties.thickness + 1}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("thickness", value - 1)}'
+                        app:layout_constraintTop_toBottomOf="@+id/innerRadiusRatioRow"/>
 
-                    <SeekBar
-                        android:id="@+id/innerRadiusRatioValue"
-                        android:layout_width="0dp"
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/thicknessRatioRow"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:max="160"
-                        android:progress="@{(int)(viewModel.drawableProperties.innerRadiusRatio * 10 - 20)}"
-                        android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("innerRadiusRatio", (float)(i + 20) / 10f)}'
-                        app:layout_constraintStart_toEndOf="@id/innerRadiusRatioTitle"
-                        app:layout_constraintTop_toTopOf="@id/innerRadiusRatioTitle"
-                        app:layout_constraintBottom_toBottomOf="@id/innerRadiusRatioTitle"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:title="» ratio"
+                        app:valueForTitle='@{viewModel.drawableProperties.thicknessRatio}'
+                        app:max="@{viewModel.drawableProperties.width / 2}"
+                        app:value="@{(int)(viewModel.drawableProperties.thicknessRatio * 10 - 10)}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("thicknessRatio", (float)(value + 10) / 10f)}'
+                        app:layout_constraintTop_toBottomOf="@+id/thicknessRow"/>
 
-                    <TextView
-                        android:id="@+id/thicknessTitle"
-                        android:layout_width="80sp"
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/widthRow"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text='@{"Thickness: " + viewModel.drawableProperties.thickness}'
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/innerRadiusRatioTitle"/>
+                        app:title="width"
+                        app:valueForTitle="@{viewModel.drawableProperties.width}"
+                        app:max="@{safeUnbox(maxWidth)}"
+                        app:value="@{viewModel.drawableProperties.width}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("width", value)}'
+                        app:layout_constraintTop_toBottomOf="@+id/thicknessRatioRow"/>
 
-                    <SeekBar
-                        android:id="@+id/thicknessValue"
-                        android:layout_width="0dp"
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/heightRow"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:max="@{viewModel.drawableProperties.width / 2}"
-                        android:progress="@{viewModel.drawableProperties.thickness + 1}"
-                        android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("thickness", i - 1)}'
-                        app:layout_constraintStart_toEndOf="@id/thicknessTitle"
-                        app:layout_constraintTop_toTopOf="@id/thicknessTitle"
-                        app:layout_constraintBottom_toBottomOf="@id/thicknessTitle"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:title="height"
+                        app:valueForTitle="@{viewModel.drawableProperties.height}"
+                        app:max="@{safeUnbox(maxHeight)}"
+                        app:value="@={viewModel.drawableProperties.height}"
+                        app:layout_constraintTop_toBottomOf="@+id/widthRow"/>
 
-                    <TextView
-                        android:id="@+id/thicknessRatioTitle"
-                        android:layout_width="80sp"
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/radiusRow"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text='@{"» Ratio: " + viewModel.drawableProperties.thicknessRatio}'
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/thicknessTitle"/>
+                        app:title="cornerRadius"
+                        app:valueForTitle="@{viewModel.drawableProperties.cornerRadius}"
+                        app:max="@{viewModel.drawableProperties.width / 2}"
+                        app:value="@{viewModel.drawableProperties.cornerRadius}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("cornerRadius", value)}'
+                        app:layout_constraintTop_toBottomOf="@+id/heightRow"/>
 
-                    <SeekBar
-                        android:id="@+id/thicknessRatioValue"
-                        android:layout_width="0dp"
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/strokeWidthRow"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:max="150"
-                        android:progress="@{(int)(viewModel.drawableProperties.thicknessRatio * 10 - 10)}"
-                        android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("thicknessRatio", (float)(i + 10) / 10f)}'
-                        app:layout_constraintStart_toEndOf="@id/thicknessRatioTitle"
-                        app:layout_constraintTop_toTopOf="@id/thicknessRatioTitle"
-                        app:layout_constraintBottom_toBottomOf="@id/thicknessRatioTitle"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-
-                    <TextView
-                        android:id="@+id/widthTitle"
-                        android:layout_width="80sp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text='@{"Width: " + viewModel.drawableProperties.width}'
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/thicknessRatioTitle"/>
-
-                    <SeekBar
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:max="@{safeUnbox(maxWidth)}"
-                        android:progress="@{viewModel.drawableProperties.width}"
-                        android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("width", i)}'
-                        app:layout_constraintStart_toEndOf="@id/widthTitle"
-                        app:layout_constraintTop_toTopOf="@id/widthTitle"
-                        app:layout_constraintBottom_toBottomOf="@id/widthTitle"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-
-                    <TextView
-                        android:id="@+id/heightTitle"
-                        android:layout_width="80sp"
-                        android:layout_height="wrap_content"
-                        android:text='@{"Height: " + viewModel.drawableProperties.height}'
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/widthTitle"/>
-
-                    <SeekBar
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:max="@{safeUnbox(maxHeight)}"
-                        android:progress="@{viewModel.drawableProperties.height}"
-                        android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("height", i)}'
-                        app:layout_constraintStart_toEndOf="@id/heightTitle"
-                        app:layout_constraintTop_toTopOf="@id/heightTitle"
-                        app:layout_constraintBottom_toBottomOf="@id/heightTitle"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-
-                    <TextView
-                        android:id="@+id/radiusTitle"
-                        android:layout_width="80sp"
-                        android:layout_height="wrap_content"
-                        android:text='@{"Radius: " + viewModel.drawableProperties.cornerRadius}'
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/heightTitle"/>
-
-                    <SeekBar
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:max="@{viewModel.drawableProperties.width / 2}"
-                        android:progress="@{viewModel.drawableProperties.cornerRadius}"
-                        android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("cornerRadius", i)}'
-                        app:layout_constraintStart_toEndOf="@id/radiusTitle"
-                        app:layout_constraintTop_toTopOf="@id/radiusTitle"
-                        app:layout_constraintBottom_toBottomOf="@id/radiusTitle"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-
-                    <TextView
-                        android:id="@+id/strokeWidthTitle"
-                        android:layout_width="80sp"
-                        android:layout_height="wrap_content"
-                        android:text='@{"stroke width: " + viewModel.drawableProperties.strokeWidth}'
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/radiusTitle"/>
-
-                    <SeekBar
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:max="@{viewModel.drawableProperties.width / 2}"
-                        android:progress="@{viewModel.drawableProperties.strokeWidth}"
-                        android:onProgressChanged='@{(seekBar, i, b) -> viewModel.updateProperty("strokeWidth", i)}'
-                        app:layout_constraintStart_toEndOf="@id/strokeWidthTitle"
-                        app:layout_constraintTop_toTopOf="@id/strokeWidthTitle"
-                        app:layout_constraintBottom_toBottomOf="@id/strokeWidthTitle"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:title="strokeWidth"
+                        app:valueForTitle="@{viewModel.drawableProperties.strokeWidth}"
+                        app:max="@{viewModel.drawableProperties.width / 2}"
+                        app:value="@{viewModel.drawableProperties.strokeWidth}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("strokeWidth", value)}'
+                        app:layout_constraintTop_toBottomOf="@+id/radiusRow"/>
 
                 </android.support.constraint.ConstraintLayout>
             </LinearLayout>
