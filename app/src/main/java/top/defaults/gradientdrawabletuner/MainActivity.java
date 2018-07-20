@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         Resources resources = getResources();
         float density = resources.getDisplayMetrics().density;
-        final int maxWidth = (int) (resources.getDisplayMetrics().widthPixels / 2.5);
+        final int maxWidth = (int) (resources.getDisplayMetrics().widthPixels / 1.5);
         binding.setMaxWidth(maxWidth);
         final int maxHeight = (int) (resources.getDisplayMetrics().heightPixels / 2.5);
         binding.setMaxHeight(maxHeight);
