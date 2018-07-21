@@ -37,7 +37,7 @@ public class GradientDrawableViewModel extends AndroidViewModel {
             }
 
             drawable.setShape(properties.shape);
-            drawable.setCornerRadius(properties.cornerRadius);
+            drawable.setCornerRadii(properties.getCornerRadii());
             drawable.setSize(properties.width + properties.strokeWidth, properties.height + properties.strokeWidth);
             drawable.setColor(properties.solidColor);
             drawable.setStroke(properties.strokeWidth, properties.strokeColor);
@@ -60,31 +60,36 @@ public class GradientDrawableViewModel extends AndroidViewModel {
 
     public void updateProperty(String propertyName, Object value) {
         try {
-            Field field = GradientDrawableProperties.class.getField(propertyName);
+            tryField(propertyName, value);
+        } catch (NoSuchFieldException e) {
+            trySetter(propertyName, value);
+        }
+    }
+
+    private void tryField(String propertyName, Object value) throws NoSuchFieldException {
+        Field field = GradientDrawableProperties.class.getField(propertyName);
+        updateProperties(properties -> {
+            try {
+                field.set(properties, value);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void trySetter(String propertyName, Object value) {
+        try {
+            Method method = GradientDrawableProperties.class.getMethod(setter(propertyName), value.getClass());
             updateProperties(properties -> {
                 try {
-                    field.setAccessible(true);
-                    field.set(properties, value);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    method.invoke(properties, value);
+                } catch (IllegalAccessException e1) {
+                    e1.printStackTrace();
+                } catch (InvocationTargetException e1) {
+                    e1.printStackTrace();
                 }
             });
-        } catch (NoSuchFieldException e) {
-            try {
-                Method method = GradientDrawableProperties.class.getMethod(setter(propertyName), value.getClass());
-                updateProperties(properties -> {
-                    try {
-                        method.invoke(properties, value);
-                    } catch (IllegalAccessException e1) {
-                        e1.printStackTrace();
-                    } catch (InvocationTargetException e1) {
-                        e1.printStackTrace();
-                    }
-                });
-            } catch (NoSuchMethodException ignored) {
-
-            }
-        }
+        } catch (NoSuchMethodException ignored) { }
     }
 
     private String setter(String field) {

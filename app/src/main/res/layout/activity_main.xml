@@ -47,8 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:checkedButton="@{viewModel.drawableProperties.shapeId}"
-                    android:onCheckedChanged='@{(radioGroup, id) -> viewModel.updateProperty("shapeId", id)}'>
+                    android:checkedButton="@{viewModel.drawableProperties.shapeId}">
 
                     <RadioButton
                         android:id="@+id/rectangle"
@@ -102,7 +101,8 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginTop="8dp"
+                    android:animateLayoutChanges="true">
 
                     <android.support.constraint.Group
                         android:layout_width="wrap_content"
@@ -171,19 +171,88 @@
                         app:title="height"
                         app:valueForTitle="@{viewModel.drawableProperties.height}"
                         app:max="@{safeUnbox(maxHeight)}"
-                        app:value="@={viewModel.drawableProperties.height}"
+                        app:value="@{viewModel.drawableProperties.height}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("height", value)}'
                         app:layout_constraintTop_toBottomOf="@+id/widthRow"/>
 
                     <top.defaults.gradientdrawabletuner.ValueRow
-                        android:id="@+id/radiusRow"
+                        android:id="@+id/cornerRadiusRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:title="cornerRadius"
+                        android:visibility="@{viewModel.drawableProperties.shapeId == R.id.rectangle ? View.VISIBLE : View.GONE}"
+                        app:extensionsName="+"
+                        app:title="radius"
                         app:valueForTitle="@{viewModel.drawableProperties.cornerRadius}"
                         app:max="@{viewModel.drawableProperties.width / 2}"
                         app:value="@{viewModel.drawableProperties.cornerRadius}"
                         app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("cornerRadius", value)}'
                         app:layout_constraintTop_toBottomOf="@+id/heightRow"/>
+
+                    <android.support.constraint.Group
+                        android:id="@+id/fourCorners"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:constraint_referenced_ids="topLeftRadiusRow, topRightRadiusRow, bottomLeftRadiusRow, bottomRightRadiusRow"/>
+
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/topLeftRadiusRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginStart="32dp"
+                        app:title="» tl"
+                        app:valueForTitle="@{viewModel.drawableProperties.topLeftRadius}"
+                        app:max="@{viewModel.drawableProperties.width / 2}"
+                        app:value="@{viewModel.drawableProperties.topLeftRadius}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("topLeftRadius", value)}'
+                        app:layout_constraintTop_toBottomOf="@+id/cornerRadiusRow"/>
+
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/topRightRadiusRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginStart="32dp"
+                        app:title="» tr"
+                        app:valueForTitle="@{viewModel.drawableProperties.topRightRadius}"
+                        app:max="@{viewModel.drawableProperties.width / 2}"
+                        app:value="@{viewModel.drawableProperties.topRightRadius}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("topRightRadius", value)}'
+                        app:layout_constraintTop_toBottomOf="@+id/topLeftRadiusRow"/>
+
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/bottomLeftRadiusRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginStart="32dp"
+                        app:title="» bl"
+                        app:valueForTitle="@{viewModel.drawableProperties.bottomLeftRadius}"
+                        app:max="@{viewModel.drawableProperties.width / 2}"
+                        app:value="@{viewModel.drawableProperties.bottomLeftRadius}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("bottomLeftRadius", value)}'
+                        app:layout_constraintTop_toBottomOf="@+id/topRightRadiusRow"/>
+
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/bottomRightRadiusRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginStart="32dp"
+                        app:title="» br"
+                        app:valueForTitle="@{viewModel.drawableProperties.bottomRightRadius}"
+                        app:max="@{viewModel.drawableProperties.width / 2}"
+                        app:value="@{viewModel.drawableProperties.bottomRightRadius}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("bottomRightRadius", value)}'
+                        app:layout_constraintTop_toBottomOf="@+id/bottomLeftRadiusRow"/>
+
+                    <android.support.constraint.Barrier
+                        android:id="@+id/cornerRadiusBarrier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="topLeftRadiusRow, topRightRadiusRow, bottomLeftRadiusRow, bottomRightRadiusRow"
+                        app:barrierDirection="bottom"/>
 
                     <top.defaults.gradientdrawabletuner.ValueRow
                         android:id="@+id/strokeWidthRow"
@@ -194,7 +263,7 @@
                         app:max="@{viewModel.drawableProperties.width / 2}"
                         app:value="@{viewModel.drawableProperties.strokeWidth}"
                         app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("strokeWidth", value)}'
-                        app:layout_constraintTop_toBottomOf="@+id/radiusRow"/>
+                        app:layout_constraintTop_toBottomOf="@+id/cornerRadiusBarrier"/>
 
                 </android.support.constraint.ConstraintLayout>
             </LinearLayout>

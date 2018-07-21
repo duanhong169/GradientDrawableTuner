@@ -4,11 +4,14 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.GradientDrawable;
+import android.support.constraint.Group;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,6 +21,9 @@ import top.defaults.view.CheckerboardDrawable;
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.imageView) ImageView imageView;
+    @BindView(R.id.shape) RadioGroup shapeSwitcher;
+    @BindView(R.id.cornerRadiusRow) ValueRow cornerRadiusRow;
+    @BindView(R.id.fourCorners) Group fourCorners;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,13 @@ public class MainActivity extends AppCompatActivity {
         CheckerboardDrawable drawable = new CheckerboardDrawable.Builder()
                 .size(30).build();
         imageView.setBackgroundDrawable(drawable);
+        shapeSwitcher.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId != R.id.rectangle) {
+                cornerRadiusRow.setExtensionsChecked(false);
+            }
+            viewModel.updateProperty("shapeId", checkedId);
+        });
+        cornerRadiusRow.setOnExtensionsCheckedListener(checked -> fourCorners.setVisibility(checked ? View.VISIBLE : View.GONE));
 
         viewModel.getDrawableProperties().observe(this, properties -> {
             if (properties != null) {

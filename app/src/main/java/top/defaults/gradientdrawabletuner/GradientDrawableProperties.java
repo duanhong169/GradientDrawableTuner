@@ -22,7 +22,7 @@ public class GradientDrawableProperties {
         idToShapeMap.put(R.id.ring, GradientDrawable.RING);
     }
 
-    @AutoProperty("shapeId") public int shape = GradientDrawable.RING;
+    @AutoProperty("shapeId") public int shape = GradientDrawable.RECTANGLE;
     public int getShapeId() {
         return shapeToIdMap.get(shape);
     }
@@ -35,7 +35,30 @@ public class GradientDrawableProperties {
     @AutoProperty public float innerRadiusRatio = 9f;
     @AutoProperty public int thickness = -1; // when thickness == -1, thicknessRatio become effective
     @AutoProperty public float thicknessRatio = 3f;
-    @AutoProperty public int cornerRadius = 0; // This is overridden for each corner by the following 4 properties
+    @AutoProperty("cornerRadius") private int cornerRadius = 0; // This is overridden for each corner by the following 4 properties
+
+    public int getCornerRadius() {
+        return cornerRadius;
+    }
+
+    public void setCornerRadius(Integer cornerRadius) {
+        if (cornerRadius == null) cornerRadius = 0;
+        this.cornerRadius = cornerRadius;
+        this.topLeftRadius = cornerRadius;
+        this.topRightRadius = cornerRadius;
+        this.bottomLeftRadius = cornerRadius;
+        this.bottomRightRadius = cornerRadius;
+    }
+
+    public float[] getCornerRadii() {
+        return new float[] {
+                topLeftRadius, topLeftRadius,
+                topRightRadius, topRightRadius,
+                bottomRightRadius, bottomRightRadius,
+                bottomLeftRadius, bottomLeftRadius
+        };
+    }
+
     @AutoProperty public int topLeftRadius = 0;
     @AutoProperty public int topRightRadius = 0;
     @AutoProperty public int bottomLeftRadius = 0;
@@ -45,6 +68,6 @@ public class GradientDrawableProperties {
     @AutoProperty public int width = 0;
     @AutoProperty public int height = 0;
     @AutoProperty public int solidColor = 0xFF2DCFCA;
-    @AutoProperty public int strokeWidth = 50;
+    @AutoProperty public int strokeWidth = 0;
     @AutoProperty public int strokeColor = 0xFF24A5A1;
 }
