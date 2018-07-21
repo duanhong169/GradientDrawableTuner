@@ -95,6 +95,15 @@ public class ValueRow extends LinearLayout {
         valueSeekBar.setProgress(value);
     }
 
+    public void setEnabled(boolean enabled) {
+        if (extensionsCheckBox != null) {
+            extensionsCheckBox.setEnabled(enabled);
+        }
+
+        titleTextView.setEnabled(enabled);
+        valueSeekBar.setEnabled(enabled);
+    }
+
     private List<OnValueChangeListener> onValueChangeListeners = new ArrayList<>();
 
     public void addOnValueChangeListener(OnValueChangeListener listener) {

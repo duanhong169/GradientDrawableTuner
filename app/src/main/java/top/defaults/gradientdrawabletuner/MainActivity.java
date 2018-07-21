@@ -22,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.imageView) ImageView imageView;
     @BindView(R.id.shape) RadioGroup shapeSwitcher;
+    @BindView(R.id.innerRadiusRow) ValueRow innerRadiusRow;
+    @BindView(R.id.innerRadiusRatioRow) ValueRow innerRadiusRatioRow;
+    @BindView(R.id.thicknessRow) ValueRow thicknessRow;
+    @BindView(R.id.thicknessRatioRow) ValueRow thicknessRatioRow;
     @BindView(R.id.cornerRadiusRow) ValueRow cornerRadiusRow;
     @BindView(R.id.fourCorners) Group fourCorners;
 
@@ -51,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
             }
             viewModel.updateProperty("shapeId", checkedId);
         });
+        innerRadiusRow.addOnValueChangeListener((view, value) -> innerRadiusRatioRow.setEnabled(value == 0));
+        thicknessRow.addOnValueChangeListener((view, value) -> thicknessRatioRow.setEnabled(value == 0));
         cornerRadiusRow.setOnExtensionsCheckedListener(checked -> fourCorners.setVisibility(checked ? View.VISIBLE : View.GONE));
 
         viewModel.getDrawableProperties().observe(this, properties -> {
