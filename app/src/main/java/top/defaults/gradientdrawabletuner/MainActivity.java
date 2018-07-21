@@ -22,10 +22,6 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.imageView) ImageView imageView;
     @BindView(R.id.shape) RadioGroup shapeSwitcher;
-    @BindView(R.id.innerRadiusRow) ValueRow innerRadiusRow;
-    @BindView(R.id.innerRadiusRatioRow) ValueRow innerRadiusRatioRow;
-    @BindView(R.id.thicknessRow) ValueRow thicknessRow;
-    @BindView(R.id.thicknessRatioRow) ValueRow thicknessRatioRow;
     @BindView(R.id.cornerRadiusRow) ValueRow cornerRadiusRow;
     @BindView(R.id.fourCorners) Group fourCorners;
 
@@ -35,16 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
         final GradientDrawableViewModel viewModel = ViewModelProviders.of(this).get(GradientDrawableViewModel.class);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        ButterKnife.bind(this);
         binding.setLifecycleOwner(this);
+
+        ButterKnife.bind(this);
 
         Resources resources = getResources();
         float density = resources.getDisplayMetrics().density;
-        final int maxWidth = (int) (resources.getDisplayMetrics().widthPixels / 1.5);
-        binding.setMaxWidth(maxWidth);
-        final int maxHeight = (int) (resources.getDisplayMetrics().heightPixels / 2.5);
-        binding.setMaxHeight(maxHeight);
-        binding.setViewModel(viewModel);
 
         CheckerboardDrawable drawable = new CheckerboardDrawable.Builder()
                 .size(30).build();
@@ -55,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
             }
             viewModel.updateProperty("shapeId", checkedId);
         });
-        innerRadiusRow.addOnValueChangeListener((view, value) -> innerRadiusRatioRow.setEnabled(value == 0));
-        thicknessRow.addOnValueChangeListener((view, value) -> thicknessRatioRow.setEnabled(value == 0));
         cornerRadiusRow.setOnExtensionsCheckedListener(checked -> fourCorners.setVisibility(checked ? View.VISIBLE : View.GONE));
 
         viewModel.getDrawableProperties().observe(this, properties -> {
@@ -75,6 +65,12 @@ public class MainActivity extends AppCompatActivity {
                 imageView.setLayoutParams(params);
             }
         });
+
+        final int maxWidth = (int) (resources.getDisplayMetrics().widthPixels / 1.5);
+        final int maxHeight = (int) (resources.getDisplayMetrics().heightPixels / 2.5);
+        binding.setMaxWidth(maxWidth);
+        binding.setMaxHeight(maxHeight);
+        binding.setViewModel(viewModel);
 
         // Set initial width/height here, because data binding's SeekBar will
         // fire a progress update to 100 when initialing

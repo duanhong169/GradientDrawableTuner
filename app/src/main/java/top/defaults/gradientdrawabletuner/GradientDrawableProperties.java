@@ -70,4 +70,6 @@ public class GradientDrawableProperties {
     @AutoProperty public int solidColor = 0xFF2DCFCA;
     @AutoProperty public int strokeWidth = 0;
     @AutoProperty public int strokeColor = 0xFF24A5A1;
+    @AutoProperty public int dashWidth = 0;
+    @AutoProperty public int dashGap = 0;
 }

@@ -124,6 +124,7 @@
                         android:id="@+id/innerRadiusRatioRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:enabled="@{viewModel.drawableProperties.innerRadius == -1}"
                         app:title="» ratio"
                         app:valueForTitle='@{viewModel.drawableProperties.innerRadiusRatio}'
                         app:max="@{viewModel.drawableProperties.width / 2}"
@@ -146,6 +147,7 @@
                         android:id="@+id/thicknessRatioRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:enabled="@{viewModel.drawableProperties.thickness == -1}"
                         app:title="» ratio"
                         app:valueForTitle='@{viewModel.drawableProperties.thicknessRatio}'
                         app:max="@{viewModel.drawableProperties.width / 2}"
@@ -264,6 +266,29 @@
                         app:value="@{viewModel.drawableProperties.strokeWidth}"
                         app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("strokeWidth", value)}'
                         app:layout_constraintTop_toBottomOf="@+id/cornerRadiusBarrier"/>
+
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/dashWidthRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:title="dashWidth"
+                        app:valueForTitle="@{viewModel.drawableProperties.dashWidth}"
+                        app:max="@{viewModel.drawableProperties.width}"
+                        app:value="@{viewModel.drawableProperties.dashWidth}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("dashWidth", value)}'
+                        app:layout_constraintTop_toBottomOf="@+id/strokeWidthRow"/>
+
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/dashGapRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:enabled="@{viewModel.drawableProperties.dashWidth > 0}"
+                        app:title="dashGap"
+                        app:valueForTitle="@{viewModel.drawableProperties.dashGap}"
+                        app:max="@{viewModel.drawableProperties.width}"
+                        app:value="@{viewModel.drawableProperties.dashGap}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("dashGap", value)}'
+                        app:layout_constraintTop_toBottomOf="@+id/dashWidthRow"/>
 
                 </android.support.constraint.ConstraintLayout>
             </LinearLayout>

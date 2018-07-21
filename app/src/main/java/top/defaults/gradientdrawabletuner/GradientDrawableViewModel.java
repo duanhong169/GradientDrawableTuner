@@ -40,7 +40,7 @@ public class GradientDrawableViewModel extends AndroidViewModel {
             drawable.setCornerRadii(properties.getCornerRadii());
             drawable.setSize(properties.width + properties.strokeWidth, properties.height + properties.strokeWidth);
             drawable.setColor(properties.solidColor);
-            drawable.setStroke(properties.strokeWidth, properties.strokeColor);
+            drawable.setStroke(properties.strokeWidth, properties.strokeColor, properties.dashWidth, properties.dashGap);
             gradientDrawable.setValue(drawable);
         });
         drawableProperties.setValue(new GradientDrawableProperties());
