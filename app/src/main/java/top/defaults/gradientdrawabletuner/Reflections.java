@@ -1,5 +1,6 @@
 package top.defaults.gradientdrawabletuner;
 
+import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 
 import java.lang.reflect.Field;
@@ -70,6 +71,17 @@ class Reflections {
         try {
             Field useLevelForShape = resolveField(gradientState, "mUseLevelForShape");
             useLevelForShape.setBoolean(drawable.getConstantState(), value);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void setPadding(GradientDrawable drawable, Rect value) {
+        try {
+            Field useLevelForShape = resolveField(gradientState, "mPadding");
+            useLevelForShape.set(drawable.getConstantState(), value);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
