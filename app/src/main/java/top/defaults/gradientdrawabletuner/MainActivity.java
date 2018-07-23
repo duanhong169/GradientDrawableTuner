@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 int width = properties.width;
                 int height = properties.height;
                 // enlarge the width/height with the strokeWidth for RECTANGLE/OVAL
-                if (properties.shape == GradientDrawable.RECTANGLE || properties.shape == GradientDrawable.OVAL) {
+                if (properties.shape != GradientDrawable.RING) {
                     width = width + properties.strokeWidth;
                     height = height + properties.strokeWidth;
                 }
