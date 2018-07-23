@@ -5,7 +5,6 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.res.Resources;
-import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -38,8 +37,6 @@ public class GradientDrawableViewModel extends AndroidViewModel {
                 Reflections.setUseLevelForShape(drawable, false);
             }
             drawable.setCornerRadii(properties.getCornerRadii());
-            Reflections.setPadding(drawable, new Rect(properties.paddingLeft, properties.paddingTop,
-                    properties.paddingRight, properties.paddingBottom));
             drawable.setSize(properties.width + properties.strokeWidth, properties.height + properties.strokeWidth);
             drawable.setColor(properties.solidColor);
             drawable.setStroke(properties.strokeWidth, properties.strokeColor, properties.dashWidth, properties.dashGap);

@@ -65,25 +65,6 @@ public class GradientDrawableProperties {
     @AutoProperty public int bottomLeftRadius = 0;
     @AutoProperty public int bottomRightRadius = 0;
 
-    @AutoProperty("padding") private int padding = 0; // This is overridden for each side by the following 4 properties
-
-    public int getPadding() {
-        return padding;
-    }
-
-    public void setPadding(Integer padding) {
-        if (padding == null) padding = 0;
-        this.padding = padding;
-        this.paddingLeft = padding;
-        this.paddingTop = padding;
-        this.paddingRight = padding;
-        this.paddingBottom = padding;
-    }
-
-    @AutoProperty public int paddingLeft = 0;
-    @AutoProperty public int paddingTop = 0;
-    @AutoProperty public int paddingRight = 0;
-    @AutoProperty public int paddingBottom = 0;
     // width & height set here will be modified to 100 by the data binding's
     // SeekBar during initializing, so we set 0 here and init them in Activity
     @AutoProperty public int width = 0;
