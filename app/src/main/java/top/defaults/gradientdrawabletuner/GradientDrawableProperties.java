@@ -35,6 +35,7 @@ public class GradientDrawableProperties {
     @AutoProperty public float innerRadiusRatio = 9f;
     @AutoProperty public int thickness = -1; // when thickness == -1, thicknessRatio become effective
     @AutoProperty public float thicknessRatio = 3f;
+
     @AutoProperty("cornerRadius") private int cornerRadius = 0; // This is overridden for each corner by the following 4 properties
 
     public int getCornerRadius() {
@@ -63,6 +64,22 @@ public class GradientDrawableProperties {
     @AutoProperty public int topRightRadius = 0;
     @AutoProperty public int bottomLeftRadius = 0;
     @AutoProperty public int bottomRightRadius = 0;
+
+    @AutoProperty("padding") private int padding = 0; // This is overridden for each side by the following 4 properties
+
+    public int getPadding() {
+        return padding;
+    }
+
+    public void setPadding(Integer padding) {
+        if (padding == null) padding = 0;
+        this.padding = padding;
+        this.paddingLeft = padding;
+        this.paddingTop = padding;
+        this.paddingRight = padding;
+        this.paddingBottom = padding;
+    }
+
     @AutoProperty public int paddingLeft = 0;
     @AutoProperty public int paddingTop = 0;
     @AutoProperty public int paddingRight = 0;

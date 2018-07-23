@@ -7,19 +7,19 @@ import android.graphics.drawable.GradientDrawable;
 import android.support.constraint.Group;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.defaults.gradientdrawabletuner.databinding.ActivityMainBinding;
-import top.defaults.view.CheckerboardDrawable;
+import top.defaults.checkerboarddrawable.CheckerboardDrawable;
 
 public class MainActivity extends AppCompatActivity {
 
+    @BindView(R.id.background) View background;
     @BindView(R.id.imageView) ImageView imageView;
     @BindView(R.id.shape) RadioGroup shapeSwitcher;
     @BindView(R.id.cornerRadiusRow) ValueRow cornerRadiusRow;
@@ -36,11 +36,9 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Resources resources = getResources();
-        float density = resources.getDisplayMetrics().density;
-
         CheckerboardDrawable drawable = new CheckerboardDrawable.Builder()
                 .size(30).build();
-        imageView.setBackgroundDrawable(drawable);
+        background.setBackgroundDrawable(drawable);
         shapeSwitcher.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId != R.id.rectangle) {
                 cornerRadiusRow.setExtensionsChecked(false);
@@ -58,10 +56,8 @@ public class MainActivity extends AppCompatActivity {
                     width = width + properties.strokeWidth;
                     height = height + properties.strokeWidth;
                 }
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
-                params.gravity = Gravity.CENTER_HORIZONTAL;
-                int margin = (int) (8 * density);
-                params.setMargins(margin, margin, margin, 0);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
+                params.addRule(RelativeLayout.CENTER_IN_PARENT);
                 imageView.setLayoutParams(params);
             }
         });

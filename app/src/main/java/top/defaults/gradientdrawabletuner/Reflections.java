@@ -80,8 +80,8 @@ class Reflections {
 
     static void setPadding(GradientDrawable drawable, Rect value) {
         try {
-            Field useLevelForShape = resolveField(gradientState, "mPadding");
-            useLevelForShape.set(drawable.getConstantState(), value);
+            Field padding = resolveField(gradientState, "mPadding");
+            padding.set(drawable.getConstantState(), value);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

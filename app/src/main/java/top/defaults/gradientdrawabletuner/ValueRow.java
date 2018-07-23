@@ -62,7 +62,7 @@ public class ValueRow extends LinearLayout {
 
         {
             titleTextView = new TextView(context);
-            LinearLayout.LayoutParams params = new LayoutParams((int) (120 * density),
+            LinearLayout.LayoutParams params = new LayoutParams((int) (96 * density),
                     ViewGroup.LayoutParams.WRAP_CONTENT);
             addView(titleTextView, params);
         }

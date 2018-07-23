@@ -21,16 +21,25 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/background"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_gravity="center_horizontal"
-            android:clickable="true"
-            android:focusable="true"
-            android:adjustViewBounds="true"
-            android:src="@{viewModel.gradientDrawable}"/>
+            android:padding="8dp">
+            <FrameLayout
+                android:id="@+id/sketchpad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@{viewModel.gradientDrawable}">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/ic_launcher_round"/>
+            </FrameLayout>
+        </RelativeLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -290,6 +299,83 @@
                         app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("dashGap", value)}'
                         app:layout_constraintTop_toBottomOf="@+id/dashWidthRow"/>
 
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/paddingRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:extensionsName="+"
+                        app:title="padding"
+                        app:valueForTitle="@{viewModel.drawableProperties.padding}"
+                        app:max="@{viewModel.drawableProperties.width / 2}"
+                        app:value="@{viewModel.drawableProperties.padding}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("padding", value)}'
+                        app:layout_constraintTop_toBottomOf="@+id/dashGapRow"/>
+
+                    <android.support.constraint.Group
+                        android:id="@+id/fourPaddings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:constraint_referenced_ids="paddingLeftRow, paddingTopRow, paddingRightRow, paddingBottomRow"/>
+
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/paddingLeftRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginStart="32dp"
+                        app:title="» left"
+                        app:valueForTitle="@{viewModel.drawableProperties.paddingLeft}"
+                        app:max="@{viewModel.drawableProperties.width / 2}"
+                        app:value="@{viewModel.drawableProperties.paddingLeft}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("paddingLeft", value)}'
+                        app:layout_constraintTop_toBottomOf="@+id/paddingRow"/>
+
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/paddingTopRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginStart="32dp"
+                        app:title="» top"
+                        app:valueForTitle="@{viewModel.drawableProperties.paddingTop}"
+                        app:max="@{viewModel.drawableProperties.width / 2}"
+                        app:value="@{viewModel.drawableProperties.paddingTop}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("paddingTop", value)}'
+                        app:layout_constraintTop_toBottomOf="@+id/paddingLeftRow"/>
+
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/paddingRightRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginStart="32dp"
+                        app:title="» right"
+                        app:valueForTitle="@{viewModel.drawableProperties.paddingRight}"
+                        app:max="@{viewModel.drawableProperties.width / 2}"
+                        app:value="@{viewModel.drawableProperties.paddingRight}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("paddingRight", value)}'
+                        app:layout_constraintTop_toBottomOf="@+id/paddingTopRow"/>
+
+                    <top.defaults.gradientdrawabletuner.ValueRow
+                        android:id="@+id/paddingBottomRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginStart="32dp"
+                        app:title="» bottom"
+                        app:valueForTitle="@{viewModel.drawableProperties.paddingBottom}"
+                        app:max="@{viewModel.drawableProperties.width / 2}"
+                        app:value="@{viewModel.drawableProperties.paddingBottom}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("paddingBottom", value)}'
+                        app:layout_constraintTop_toBottomOf="@+id/paddingRightRow"/>
+
+                    <android.support.constraint.Barrier
+                        android:id="@+id/paddingsBarrier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="paddingLeftRow, paddingTopRow, paddingRightRow, paddingBottomRow"
+                        app:barrierDirection="bottom"/>
                 </android.support.constraint.ConstraintLayout>
             </LinearLayout>
         </ScrollView>
