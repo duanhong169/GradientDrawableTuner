@@ -32,8 +32,8 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'com.google.android:flexbox:1.0.0'
     implementation 'com.jakewharton:butterknife:8.7.0'
-    implementation 'com.github.duanhong169:colorpicker:1.1.0'
-    implementation 'com.github.duanhong169:checkerboarddrawable:1.0.1'
+    implementation 'com.github.duanhong169:colorpicker:1.1.1'
+    implementation 'com.github.duanhong169:checkerboarddrawable:1.0.2'
     implementation project(':annotations')
     annotationProcessor project(':compiler')
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
