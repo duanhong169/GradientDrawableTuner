@@ -145,4 +145,16 @@ public class GradientDrawableProperties {
     @AutoProperty public int strokeColor = 0xFF24A5A1;
     @AutoProperty public int dashWidth = 0;
     @AutoProperty public int dashGap = 0;
+
+    public boolean shouldEnableGradient() {
+        return useGradient && shape != GradientDrawable.LINE;
+    }
+
+    public boolean shouldEnableCenterColor() {
+        return useCenterColor && shouldEnableGradient();
+    }
+
+    public boolean shouldEnableGradientRadius() {
+        return type == GradientDrawable.RADIAL_GRADIENT && shouldEnableGradient();
+    }
 }

@@ -112,6 +112,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/use_gradient"
+                        android:visibility="@{viewModel.drawableProperties.shapeId != R.id.line ? View.VISIBLE : View.GONE}"
                         android:checked="@={viewModel.drawableProperties.useGradient}"
                         android:onCheckedChanged='@{(checkBox, isChecked) -> viewModel.updateProperty("useGradient", isChecked)}'/>
 
@@ -119,7 +120,7 @@
                         android:id="@+id/startColor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.drawableProperties.useGradient ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{viewModel.drawableProperties.shouldEnableGradient() ? View.VISIBLE : View.GONE}"
                         android:text="@string/start_color"
                         app:layout_wrapBefore="true"
                         app:onColorChange='@{(v, color) -> viewModel.updateProperty("startColor", color)}'
@@ -129,7 +130,7 @@
                         android:id="@+id/centerColor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="@{(viewModel.drawableProperties.useGradient &amp;&amp; viewModel.drawableProperties.useCenterColor) ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{viewModel.drawableProperties.shouldEnableCenterColor() ? View.VISIBLE : View.GONE}"
                         android:text="@string/center_color"
                         app:onColorChange='@{(v, color) -> viewModel.updateProperty("centerColor", color)}'
                         app:color="@{viewModel.drawableProperties.centerColor}"/>
@@ -138,7 +139,7 @@
                         android:id="@+id/endColor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.drawableProperties.useGradient ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{viewModel.drawableProperties.shouldEnableGradient() ? View.VISIBLE : View.GONE}"
                         android:text="@string/end_color"
                         app:onColorChange='@{(v, color) -> viewModel.updateProperty("endColor", color)}'
                         app:color="@{viewModel.drawableProperties.endColor}"/>
@@ -148,7 +149,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/use_center_color"
-                        android:visibility="@{viewModel.drawableProperties.useGradient ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{viewModel.drawableProperties.shouldEnableGradient() ? View.VISIBLE : View.GONE}"
                         android:checked="@={viewModel.drawableProperties.useCenterColor}"
                         android:onCheckedChanged='@{(checkBox, isChecked) -> viewModel.updateProperty("useCenterColor", isChecked)}'/>
 
@@ -216,7 +217,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:visibility="@{viewModel.drawableProperties.useGradient ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{viewModel.drawableProperties.shouldEnableGradient() ? View.VISIBLE : View.GONE}"
                         android:checkedButton="@{viewModel.drawableProperties.typeId}"
                         android:onCheckedChanged='@{(radioGroup, id) -> viewModel.updateProperty("typeId", id)}'
                         app:layout_constraintTop_toBottomOf="@+id/thicknessRatioRow">
@@ -250,7 +251,7 @@
                         android:id="@+id/angleRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.drawableProperties.useGradient ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{viewModel.drawableProperties.shouldEnableGradient() ? View.VISIBLE : View.GONE}"
                         app:title="@string/angle"
                         app:valueForTitle="@{viewModel.drawableProperties.angle}"
                         app:max="@{safeUnbox(7)}"
@@ -262,7 +263,7 @@
                         android:id="@+id/centerXRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.drawableProperties.useGradient ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{viewModel.drawableProperties.shouldEnableGradient() ? View.VISIBLE : View.GONE}"
                         app:title="@string/center_x"
                         app:valueForTitle="@{viewModel.drawableProperties.centerX}"
                         app:max="@{safeUnbox(100)}"
@@ -274,7 +275,7 @@
                         android:id="@+id/centerYRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.drawableProperties.useGradient ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{viewModel.drawableProperties.shouldEnableGradient() ? View.VISIBLE : View.GONE}"
                         app:title="@string/center_y"
                         app:valueForTitle="@{viewModel.drawableProperties.centerY}"
                         app:max="@{safeUnbox(100)}"
@@ -286,7 +287,7 @@
                         android:id="@+id/gradientRadiusRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.drawableProperties.useGradient &amp;&amp; viewModel.drawableProperties.typeId == R.id.radial_gradient ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{viewModel.drawableProperties.shouldEnableGradientRadius() ? View.VISIBLE : View.GONE}"
                         app:title="@string/gradient_radius"
                         app:valueForTitle="@{viewModel.drawableProperties.gradientRadius}"
                         app:max="@{safeUnbox(maxHeight) > safeUnbox(maxWidth) ? safeUnbox(maxHeight) : safeUnbox(maxWidth)}"
