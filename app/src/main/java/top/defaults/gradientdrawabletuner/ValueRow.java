@@ -44,7 +44,7 @@ public class ValueRow extends LinearLayout {
 
         float density = context.getResources().getDisplayMetrics().density;
         int padding = (int) (4 * density);
-        setPadding(padding, padding, padding, padding);
+        setPadding(0, padding, 0, padding);
 
         if (!TextUtils.isEmpty(extensionsName)) {
             extensionsCheckBox = new CheckBox(context);

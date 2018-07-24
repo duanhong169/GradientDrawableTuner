@@ -68,11 +68,12 @@ public class MainActivity extends AppCompatActivity {
         binding.setMaxHeight(maxHeight);
         binding.setViewModel(viewModel);
 
-        // Set initial width/height here, because data binding's SeekBar will
+        // Set initial width/height/gradient-radius here, because data binding's SeekBar will
         // fire a progress update to 100 when initialing
         imageView.post(() -> viewModel.updateProperties(properties -> {
             properties.width = 400;
             properties.height = 400;
+            properties.gradientRadius = 200;
         }));
     }
 }

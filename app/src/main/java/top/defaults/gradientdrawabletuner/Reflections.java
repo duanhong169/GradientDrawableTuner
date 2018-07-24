@@ -4,6 +4,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 class Reflections {
     
@@ -21,6 +22,12 @@ class Reflections {
         Field field = source.getDeclaredField(fieldName);
         field.setAccessible(true);
         return field;
+    }
+
+    private static Method resolveMethod(Class<?> source, String methodName, Class<?>... parameterTypes) throws SecurityException, NoSuchMethodException {
+        Method method = source.getDeclaredMethod(methodName, parameterTypes);
+        method.setAccessible(true);
+        return method;
     }
 
     static void setInnerRadius(GradientDrawable drawable, int value) {
@@ -82,6 +89,17 @@ class Reflections {
         try {
             Field padding = resolveField(gradientState, "mPadding");
             padding.set(drawable.getConstantState(), value);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void setGradientIsDirty(GradientDrawable drawable, boolean value) {
+        try {
+            Field padding = resolveField(drawable.getClass(), "mGradientIsDirty");
+            padding.setBoolean(drawable, value);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

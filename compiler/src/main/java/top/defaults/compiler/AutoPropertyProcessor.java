@@ -66,7 +66,7 @@ public class AutoPropertyProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-        autoPropertyInfoMap.clear();
+        autoPropertyClassInfoMap.clear();
         Set<? extends Element> elements = roundEnvironment.getElementsAnnotatedWith(AutoProperty.class);
         for (Element element : elements) {
             if (element.getKind() != ElementKind.FIELD) {
@@ -77,40 +77,42 @@ public class AutoPropertyProcessor extends AbstractProcessor {
             VariableElement variableElement = (VariableElement) element;
             TypeElement typeElement = (TypeElement) variableElement.getEnclosingElement();
             String qualifiedName = typeElement.getQualifiedName().toString();
-            AutoPropertyInfo info = autoPropertyInfoMap.get(qualifiedName);
+            AutoPropertyClassInfo info = autoPropertyClassInfoMap.get(qualifiedName);
             if (info == null) {
-                TypeMirror typeMirror = variableElement.asType();
-                TypeName propertyType = TypeName.get(typeMirror);
-                if (propertyType instanceof ParameterizedTypeName) {
-                    propertyType = ((ParameterizedTypeName) propertyType).rawType;
-                }
                 String packageName = getPackage(typeElement).getQualifiedName().toString();
                 String className = typeElement.getQualifiedName().toString().substring(
                         packageName.length() + 1).replace('.', '$');
                 ClassName autoPropertyClassName = ClassName.get(packageName, className + CLASS_SUFFIX);
-                info = new AutoPropertyInfo(propertyType, autoPropertyClassName);
-                autoPropertyInfoMap.put(qualifiedName, info);
+                info = new AutoPropertyClassInfo(autoPropertyClassName);
+                autoPropertyClassInfoMap.put(qualifiedName, info);
             }
+
+            TypeMirror typeMirror = variableElement.asType();
+            TypeName propertyType = TypeName.get(typeMirror);
+            if (propertyType instanceof ParameterizedTypeName) {
+                propertyType = ((ParameterizedTypeName) propertyType).rawType;
+            }
+
             AutoProperty annotation = variableElement.getAnnotation(AutoProperty.class);
             String setter = annotation.value();
-            info.autoProperties.put(variableElement.getSimpleName().toString(), setter);
+            info.addProperty(variableElement.getSimpleName().toString(), new AutoPropertyInfo(propertyType, setter));
         }
 
         ClassName gradientDrawableViewModel = ClassName.get("top.defaults.gradientdrawabletuner", "GradientDrawableViewModel");
-        for (Map.Entry<String, AutoPropertyInfo> entry : autoPropertyInfoMap.entrySet()) {
-            AutoPropertyInfo info = entry.getValue();
+        for (Map.Entry<String, AutoPropertyClassInfo> entry : autoPropertyClassInfoMap.entrySet()) {
+            AutoPropertyClassInfo info = entry.getValue();
 
             TypeSpec.Builder autoPropertyClassBuilder = TypeSpec.classBuilder(info.autoPropertyClassName.simpleName())
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL);
 
-            for (Map.Entry<String, String> property : info.autoProperties.entrySet()) {
+            for (Map.Entry<String, AutoPropertyInfo> property : info.autoProperties.entrySet()) {
                 String propertyName = property.getKey();
-                String setter = property.getValue();
+                String setter = property.getValue().setter;
                 MethodSpec.Builder propertyMethodBuilder = MethodSpec
                         .methodBuilder(propertyName + METHOD_SUFFIX)
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                         .addParameter(gradientDrawableViewModel, "viewModel")
-                        .addParameter(info.propertyTypeName, "value");
+                        .addParameter(property.getValue().propertyTypeName, "value");
                 if (setter == null || setter.length() == 0) {
                     propertyMethodBuilder.addStatement("viewModel.updateProperties(properties -> properties.$L = value)", propertyName);
                 } else {
@@ -132,16 +134,28 @@ public class AutoPropertyProcessor extends AbstractProcessor {
         return true;
     }
 
-    private Map<String, AutoPropertyInfo> autoPropertyInfoMap = new HashMap<>();
+    private Map<String, AutoPropertyClassInfo> autoPropertyClassInfoMap = new HashMap<>();
+
+    private class AutoPropertyClassInfo {
+        private ClassName autoPropertyClassName;
+        Map<String, AutoPropertyInfo> autoProperties = new HashMap<>();
+
+        AutoPropertyClassInfo(ClassName autoPropertyClassName) {
+            this.autoPropertyClassName = autoPropertyClassName;
+        }
+
+        void addProperty(String name, AutoPropertyInfo info) {
+            autoProperties.put(name, info);
+        }
+    }
 
     private class AutoPropertyInfo {
-        private ClassName autoPropertyClassName;
         private final TypeName propertyTypeName;
-        Map<String, String> autoProperties = new HashMap<>();
+        private final String setter;
 
-        AutoPropertyInfo(TypeName targetTypeName, ClassName autoPropertyClassName) {
+        AutoPropertyInfo(TypeName targetTypeName, String setter) {
             this.propertyTypeName = targetTypeName;
-            this.autoPropertyClassName = autoPropertyClassName;
+            this.setter = setter;
         }
     }
 }
