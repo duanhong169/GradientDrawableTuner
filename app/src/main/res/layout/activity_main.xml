@@ -88,7 +88,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:flexWrap="wrap"
-                    app:alignItems="flex_start" >
+                    app:alignItems="flex_start"
+                    android:animateLayoutChanges="true">
 
                     <top.defaults.gradientdrawabletuner.ColorIndicator
                         android:id="@+id/strokeColor"
