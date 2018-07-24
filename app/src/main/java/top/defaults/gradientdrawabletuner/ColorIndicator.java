@@ -2,13 +2,24 @@ package top.defaults.gradientdrawabletuner;
 
 import android.content.Context;
 import android.databinding.BindingAdapter;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.Gravity;
 
+import top.defaults.checkerboarddrawable.CheckerboardDrawable;
 import top.defaults.colorpicker.ColorPickerPopup;
 
 public class ColorIndicator extends AppCompatTextView {
@@ -56,12 +67,47 @@ public class ColorIndicator extends AppCompatTextView {
 
     public void setColor(int color) {
         currentColor = color;
-        GradientDrawable left = new GradientDrawable();
-        left.setColor(currentColor);
-        left.setCornerRadius(indicatorSize / 2);
-        left.setStroke(1, Color.LTGRAY);
+
+        GradientDrawable colorDrawable = new GradientDrawable();
+        colorDrawable.setColor(currentColor);
+        colorDrawable.setCornerRadius(indicatorSize / 2);
+        colorDrawable.setStroke(1, Color.LTGRAY);
+
+        LayerDrawable left = new LayerDrawable(new Drawable[]{backgroundDrawable(), colorDrawable});
         left.setBounds(0, 0, indicatorSize, indicatorSize);
         setCompoundDrawables(left, null, null, null);
+    }
+
+    private static Drawable backgroundDrawable;
+
+    public Drawable backgroundDrawable() {
+        if (backgroundDrawable == null) {
+            Paint backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            Bitmap roundedBackgroundBitmap = Bitmap.createBitmap(indicatorSize, indicatorSize, Bitmap.Config.ARGB_8888);
+            Canvas roundedBackgroundCanvas = new Canvas(roundedBackgroundBitmap);
+
+            Rect rect = new Rect(0, 0, indicatorSize, indicatorSize);
+            RectF rectF = new RectF(rect);
+
+            int radius = indicatorSize / 2;
+
+            backgroundPaint.setXfermode(null);
+            roundedBackgroundCanvas.drawRoundRect(rectF, radius, radius, backgroundPaint);
+
+            backgroundPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+            CheckerboardDrawable background = new CheckerboardDrawable.Builder().size(radius).build();
+            roundedBackgroundCanvas.drawBitmap(fromDrawable(background, indicatorSize), rect, rect, backgroundPaint);
+
+            backgroundDrawable = new BitmapDrawable(getResources(), roundedBackgroundBitmap);
+        }
+        return backgroundDrawable;
+    }
+
+    public Bitmap fromDrawable(Drawable drawable, int size) {
+        Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.draw(canvas);
+        return bitmap;
     }
 
     public int getColor() {
