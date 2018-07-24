@@ -2,8 +2,6 @@
 
 Get confusing about the <shape> drawable in Android? Try playing with `GradientDrawableTuner`! With the `GradientDrawableTuner`, you can see how the properties of `GradientDrawable` affect the Drawable's appearance, intuitively.
 
-[![GradientDrawableTuner](art/feature.png)][1]
-
 [![Get it on Google Play](art/en-play-badge.png)][1]
 
 ## Screen shots
