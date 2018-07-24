@@ -49,7 +49,7 @@ public class GradientDrawableViewModel extends AndroidViewModel {
             drawable.setStroke(properties.strokeWidth, properties.strokeColor, properties.dashWidth, properties.dashGap);
             gradientDrawable.setValue(drawable);
         });
-        drawableProperties.setValue(new GradientDrawableProperties());
+        reset();
     }
 
     public MutableLiveData<GradientDrawable> getGradientDrawable() {
@@ -108,6 +108,10 @@ public class GradientDrawableViewModel extends AndroidViewModel {
         if (properties == null) properties = new GradientDrawableProperties();
         callback.onData(properties);
         drawableProperties.setValue(properties);
+    }
+
+    public void reset() {
+        drawableProperties.setValue(new GradientDrawableProperties());
     }
 
     @SuppressWarnings("unused")

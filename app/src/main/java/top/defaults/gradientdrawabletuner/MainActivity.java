@@ -7,6 +7,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.support.constraint.Group;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -25,11 +27,14 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.cornerRadiusRow) ValueRow cornerRadiusRow;
     @BindView(R.id.fourCorners) Group fourCorners;
 
+    private GradientDrawableViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Crafting <shape>");
 
-        final GradientDrawableViewModel viewModel = ViewModelProviders.of(this).get(GradientDrawableViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(GradientDrawableViewModel.class);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setLifecycleOwner(this);
 
@@ -75,5 +80,23 @@ public class MainActivity extends AppCompatActivity {
             properties.height = 400;
             properties.gradientRadius = 200;
         }));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actions, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.reset:
+                viewModel.reset();
+                break;
+            case R.id.save:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
