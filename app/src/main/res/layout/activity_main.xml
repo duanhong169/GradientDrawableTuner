@@ -264,9 +264,9 @@
                         android:visibility="@{viewModel.drawableProperties.useGradient ? View.VISIBLE : View.GONE}"
                         app:title="@string/center_x"
                         app:valueForTitle="@{viewModel.drawableProperties.centerX}"
-                        app:max="@{safeUnbox(maxWidth)}"
-                        app:value="@{(int) (viewModel.drawableProperties.centerX * safeUnbox(maxWidth))}"
-                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("centerX", (float) value / (float) safeUnbox(maxWidth))}'
+                        app:max="@{safeUnbox(100)}"
+                        app:value="@{(int) (viewModel.drawableProperties.centerX * 100)}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("centerX", (float) value / 100f)}'
                         app:layout_constraintTop_toBottomOf="@+id/angleRow"/>
 
                     <top.defaults.gradientdrawabletuner.ValueRow
@@ -276,9 +276,9 @@
                         android:visibility="@{viewModel.drawableProperties.useGradient ? View.VISIBLE : View.GONE}"
                         app:title="@string/center_y"
                         app:valueForTitle="@{viewModel.drawableProperties.centerY}"
-                        app:max="@{safeUnbox(maxHeight)}"
-                        app:value="@{(int) (viewModel.drawableProperties.centerY * safeUnbox(maxHeight))}"
-                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("centerY", (float) value / (float) safeUnbox(maxHeight))}'
+                        app:max="@{safeUnbox(100)}"
+                        app:value="@{(int) (viewModel.drawableProperties.centerY * 100)}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("centerY", (float) value / 100f)}'
                         app:layout_constraintTop_toBottomOf="@+id/centerXRow"/>
 
                     <top.defaults.gradientdrawabletuner.ValueRow
