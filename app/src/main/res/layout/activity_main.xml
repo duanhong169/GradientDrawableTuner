@@ -33,7 +33,8 @@
                 android:layout_centerInParent="true"
                 android:layerType="software"
                 android:src="@{viewModel.gradientDrawable}"
-                android:background="#2f000000"/>
+                android:background="#2f000000"
+                android:contentDescription="@string/drawable_target"/>
         </RelativeLayout>
 
         <ScrollView
@@ -51,37 +52,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:text="shape: "
                     android:checkedButton="@{viewModel.drawableProperties.shapeId}">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="shape: "/>
+                        android:text="@string/radio_group_shape_title"/>
 
                     <RadioButton
                         android:id="@+id/rectangle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="rectangle"/>
+                        android:text="@string/shape_type_rectangle"/>
 
                     <RadioButton
                         android:id="@+id/oval"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="oval"/>
+                        android:text="@string/shape_type_oval"/>
 
                     <RadioButton
                         android:id="@+id/line"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="line"/>
+                        android:text="@string/shape_type_line"/>
 
                     <RadioButton
                         android:id="@+id/ring"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ring"/>
+                        android:text="@string/shape_type_ring"/>
                 </RadioGroup>
 
                 <com.google.android.flexbox.FlexboxLayout
@@ -94,7 +94,7 @@
                         android:id="@+id/strokeColor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="stroke"
+                        android:text="@string/stroke"
                         app:onColorChange='@{(v, color) -> viewModel.updateProperty("strokeColor", color)}'
                         app:color="@{viewModel.drawableProperties.strokeColor}"/>
 
@@ -102,7 +102,7 @@
                         android:id="@+id/solidColor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="solid"
+                        android:text="@string/solid"
                         app:onColorChange='@{(v, color) -> viewModel.updateProperty("solidColor", color)}'
                         app:color="@{viewModel.drawableProperties.solidColor}"/>
 
@@ -110,7 +110,7 @@
                         android:id="@+id/useGradient"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="useGradient"
+                        android:text="@string/use_gradient"
                         android:checked="@={viewModel.drawableProperties.useGradient}"
                         android:onCheckedChanged='@{(checkBox, isChecked) -> viewModel.updateProperty("useGradient", isChecked)}'/>
 
@@ -119,7 +119,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:visibility="@{viewModel.drawableProperties.useGradient ? View.VISIBLE : View.GONE}"
-                        android:text="start"
+                        android:text="@string/start_color"
                         app:layout_wrapBefore="true"
                         app:onColorChange='@{(v, color) -> viewModel.updateProperty("startColor", color)}'
                         app:color="@{viewModel.drawableProperties.startColor}"/>
@@ -129,7 +129,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:visibility="@{(viewModel.drawableProperties.useGradient &amp;&amp; viewModel.drawableProperties.useCenterColor) ? View.VISIBLE : View.GONE}"
-                        android:text="center"
+                        android:text="@string/center_color"
                         app:onColorChange='@{(v, color) -> viewModel.updateProperty("centerColor", color)}'
                         app:color="@{viewModel.drawableProperties.centerColor}"/>
 
@@ -138,7 +138,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:visibility="@{viewModel.drawableProperties.useGradient ? View.VISIBLE : View.GONE}"
-                        android:text="end"
+                        android:text="@string/end_color"
                         app:onColorChange='@{(v, color) -> viewModel.updateProperty("endColor", color)}'
                         app:color="@{viewModel.drawableProperties.endColor}"/>
 
@@ -146,7 +146,7 @@
                         android:id="@+id/useCenterColor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="useCenterColor"
+                        android:text="@string/use_center_color"
                         android:visibility="@{viewModel.drawableProperties.useGradient ? View.VISIBLE : View.GONE}"
                         android:checked="@={viewModel.drawableProperties.useCenterColor}"
                         android:onCheckedChanged='@{(checkBox, isChecked) -> viewModel.updateProperty("useCenterColor", isChecked)}'/>
@@ -169,7 +169,7 @@
                         android:id="@+id/innerRadiusRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:title="innerRadius"
+                        app:title="@string/inner_radius"
                         app:valueForTitle='@{viewModel.drawableProperties.innerRadius}'
                         app:max="@{viewModel.drawableProperties.width / 2}"
                         app:value="@{viewModel.drawableProperties.innerRadius + 1}"
@@ -180,7 +180,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:enabled="@{viewModel.drawableProperties.innerRadius == -1}"
-                        app:title="» ratio"
+                        app:title="@string/sub_ratio"
                         app:valueForTitle='@{viewModel.drawableProperties.innerRadiusRatio}'
                         app:max="@{viewModel.drawableProperties.width / 2}"
                         app:value="@{(int)(viewModel.drawableProperties.innerRadiusRatio * 10 - 20)}"
@@ -191,7 +191,7 @@
                         android:id="@+id/thicknessRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:title="thickness"
+                        app:title="@string/thickness"
                         app:valueForTitle='@{viewModel.drawableProperties.thickness}'
                         app:max="@{viewModel.drawableProperties.width / 2}"
                         app:value="@{viewModel.drawableProperties.thickness + 1}"
@@ -203,7 +203,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:enabled="@{viewModel.drawableProperties.thickness == -1}"
-                        app:title="» ratio"
+                        app:title="@string/sub_ratio"
                         app:valueForTitle='@{viewModel.drawableProperties.thicknessRatio}'
                         app:max="@{viewModel.drawableProperties.width / 2}"
                         app:value="@{(int)(viewModel.drawableProperties.thicknessRatio * 10 - 10)}"
@@ -215,7 +215,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:text="gradient type: "
                         android:visibility="@{viewModel.drawableProperties.useGradient ? View.VISIBLE : View.GONE}"
                         android:checkedButton="@{viewModel.drawableProperties.typeId}"
                         android:onCheckedChanged='@{(radioGroup, id) -> viewModel.updateProperty("typeId", id)}'
@@ -224,25 +223,25 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="type: "/>
+                            android:text="@string/radio_group_gradient_type_title"/>
 
                         <RadioButton
                             android:id="@+id/linear_gradient"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="linear"/>
+                            android:text="@string/gradient_type_linear"/>
 
                         <RadioButton
                             android:id="@+id/radial_gradient"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="radial"/>
+                            android:text="@string/gradient_type_radial"/>
 
                         <RadioButton
                             android:id="@+id/sweep_gradient"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="sweep"/>
+                            android:text="@string/gradient_type_sweep"/>
 
                     </RadioGroup>
 
@@ -251,7 +250,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="@{viewModel.drawableProperties.useGradient ? View.VISIBLE : View.GONE}"
-                        app:title="angle"
+                        app:title="@string/angle"
                         app:valueForTitle="@{viewModel.drawableProperties.angle}"
                         app:max="@{safeUnbox(7)}"
                         app:value="@{viewModel.drawableProperties.angle / 45}"
@@ -263,7 +262,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="@{viewModel.drawableProperties.useGradient ? View.VISIBLE : View.GONE}"
-                        app:title="centerX"
+                        app:title="@string/center_x"
                         app:valueForTitle="@{viewModel.drawableProperties.centerX}"
                         app:max="@{safeUnbox(maxWidth)}"
                         app:value="@{(int) (viewModel.drawableProperties.centerX * safeUnbox(maxWidth))}"
@@ -275,7 +274,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="@{viewModel.drawableProperties.useGradient ? View.VISIBLE : View.GONE}"
-                        app:title="centerY"
+                        app:title="@string/center_y"
                         app:valueForTitle="@{viewModel.drawableProperties.centerY}"
                         app:max="@{safeUnbox(maxHeight)}"
                         app:value="@{(int) (viewModel.drawableProperties.centerY * safeUnbox(maxHeight))}"
@@ -287,7 +286,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="@{viewModel.drawableProperties.useGradient &amp;&amp; viewModel.drawableProperties.typeId == R.id.radial_gradient ? View.VISIBLE : View.GONE}"
-                        app:title="gradient\nradius"
+                        app:title="@string/gradient_radius"
                         app:valueForTitle="@{viewModel.drawableProperties.gradientRadius}"
                         app:max="@{safeUnbox(maxHeight) > safeUnbox(maxWidth) ? safeUnbox(maxHeight) : safeUnbox(maxWidth)}"
                         app:value="@{viewModel.drawableProperties.gradientRadius}"
@@ -298,7 +297,7 @@
                         android:id="@+id/widthRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:title="width"
+                        app:title="@string/width"
                         app:valueForTitle="@{viewModel.drawableProperties.width}"
                         app:max="@{safeUnbox(maxWidth)}"
                         app:value="@{viewModel.drawableProperties.width}"
@@ -309,7 +308,7 @@
                         android:id="@+id/heightRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:title="height"
+                        app:title="@string/height"
                         app:valueForTitle="@{viewModel.drawableProperties.height}"
                         app:max="@{safeUnbox(maxHeight)}"
                         app:value="@{viewModel.drawableProperties.height}"
@@ -322,7 +321,7 @@
                         android:layout_height="wrap_content"
                         android:visibility="@{viewModel.drawableProperties.shapeId == R.id.rectangle ? View.VISIBLE : View.GONE}"
                         app:extensionsName="+"
-                        app:title="radius"
+                        app:title="@string/radius"
                         app:valueForTitle="@{viewModel.drawableProperties.cornerRadius}"
                         app:max="@{viewModel.drawableProperties.width / 2}"
                         app:value="@{viewModel.drawableProperties.cornerRadius}"
@@ -342,7 +341,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="32dp"
                         android:layout_marginStart="32dp"
-                        app:title="» tl"
+                        app:title="@string/sub_tl"
                         app:valueForTitle="@{viewModel.drawableProperties.topLeftRadius}"
                         app:max="@{viewModel.drawableProperties.width / 2}"
                         app:value="@{viewModel.drawableProperties.topLeftRadius}"
@@ -355,7 +354,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="32dp"
                         android:layout_marginStart="32dp"
-                        app:title="» tr"
+                        app:title="@string/sub_tr"
                         app:valueForTitle="@{viewModel.drawableProperties.topRightRadius}"
                         app:max="@{viewModel.drawableProperties.width / 2}"
                         app:value="@{viewModel.drawableProperties.topRightRadius}"
@@ -368,7 +367,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="32dp"
                         android:layout_marginStart="32dp"
-                        app:title="» bl"
+                        app:title="@string/sub_bl"
                         app:valueForTitle="@{viewModel.drawableProperties.bottomLeftRadius}"
                         app:max="@{viewModel.drawableProperties.width / 2}"
                         app:value="@{viewModel.drawableProperties.bottomLeftRadius}"
@@ -381,7 +380,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="32dp"
                         android:layout_marginStart="32dp"
-                        app:title="» br"
+                        app:title="@string/sub_br"
                         app:valueForTitle="@{viewModel.drawableProperties.bottomRightRadius}"
                         app:max="@{viewModel.drawableProperties.width / 2}"
                         app:value="@{viewModel.drawableProperties.bottomRightRadius}"
@@ -399,7 +398,7 @@
                         android:id="@+id/strokeWidthRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:title="strokeWidth"
+                        app:title="@string/stroke_width"
                         app:valueForTitle="@{viewModel.drawableProperties.strokeWidth}"
                         app:max="@{viewModel.drawableProperties.width / 2}"
                         app:value="@{viewModel.drawableProperties.strokeWidth}"
@@ -410,7 +409,7 @@
                         android:id="@+id/dashWidthRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:title="dashWidth"
+                        app:title="@string/dash_width"
                         app:valueForTitle="@{viewModel.drawableProperties.dashWidth}"
                         app:max="@{viewModel.drawableProperties.width}"
                         app:value="@{viewModel.drawableProperties.dashWidth}"
@@ -422,7 +421,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:enabled="@{viewModel.drawableProperties.dashWidth > 0}"
-                        app:title="dashGap"
+                        app:title="@string/dash_gap"
                         app:valueForTitle="@{viewModel.drawableProperties.dashGap}"
                         app:max="@{viewModel.drawableProperties.width}"
                         app:value="@{viewModel.drawableProperties.dashGap}"
