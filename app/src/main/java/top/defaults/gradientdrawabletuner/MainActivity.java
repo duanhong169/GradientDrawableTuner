@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         Resources resources = getResources();
         CheckerboardDrawable drawable = new CheckerboardDrawable.Builder()
                 .size(30).build();
-        background.setBackgroundDrawable(drawable);
+        background.setBackground(drawable);
         shapeSwitcher.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId != R.id.rectangle) {
                 cornerRadiusRow.setExtensionsChecked(false);
