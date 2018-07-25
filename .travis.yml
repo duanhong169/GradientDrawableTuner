@@ -1,0 +1,20 @@
+language: android
+jdk: oraclejdk8
+android:
+  components:
+    - platform-tools
+    - tools
+    - build-tools-27.0.3
+    - android-27
+    - extra-android-m2repository
+    - extra-android-support
+script:
+  - ./gradlew clean assembleRelease
+deploy:
+  provider: releases
+  api_key:
+    secure: PmVhw4tw+Tf6pIMuWnr0LRN4qqvfpAapskoePqfPzvFQd51fFAgDEgCljLCK6hBbF4HWKAc6+H/emfG00fbhpb33rMqScLCqRfF+5Vx3VEpVU06xI25/jgRrsafw1aSP4pi3KEkJ/dWhGMiqO7bmWJU3dfzYA1TA5oviwb4gombwQs4Eg0czMc9/QjBIpFmHLom1ZMb2n8kylmn9NfXGkwuA4HFoCSobk8DgTvRZLONfvxKGeJODenR7sFYjxa5HcKEYjXwS7WmmsQ8jOO4SkFvVobItU+UuOg8RfqowzcVTQ4j3dDrSJr3H+3tDbQHaiAEqvK4hwb3WihUb1fLU03BkxV3C1j0+I+tdFSlaw/opCWFfAr1275AS2fiSDbNYHfr/3S9WjKKHDZTbzyvw4E374Q7Rxzl9IZ6sd226EsA6Qv6W76RWfBKYuUT+9P9iYY/5cqXYHR0m+dZ3BexuF8xVepe3hbOu7T1ImEjdsmUTC0axGOmTbTdZYyzcR6xQ7wOgwLvDfqYkbbleNEXm74oDDhkVs7iJJWFe/jI7Ym7909/5imZ2xFbZ/iYwgIgLZ0r0Qr8j/k1C/kitBXz+6Lr5x8Uoq9IFmevTYiilIyectDs4l0a2o+w6OoLameRWBjdVu7tcjATASO/1qI1kAA3+Hmx2lzi4mSWehkTjF8I=
+  file: app/build/outputs/apk/app-release.apk
+  skip_cleanup: true
+  on:
+    tags: true
