@@ -289,10 +289,10 @@
                         android:layout_height="wrap_content"
                         android:visibility="@{viewModel.drawableProperties.shouldEnableGradientRadius() ? View.VISIBLE : View.GONE}"
                         app:title="@string/gradient_radius"
-                        app:valueForTitle="@{viewModel.drawableProperties.gradientRadius}"
+                        app:valueForTitle="@{viewModel.drawableProperties.gradientRadiusInt}"
                         app:max="@{safeUnbox(maxHeight) > safeUnbox(maxWidth) ? safeUnbox(maxHeight) : safeUnbox(maxWidth)}"
-                        app:value="@{viewModel.drawableProperties.gradientRadius}"
-                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("gradientRadius", value)}'
+                        app:value="@{viewModel.drawableProperties.gradientRadiusInt}"
+                        app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("gradientRadius", (float)value)}'
                         app:layout_constraintTop_toBottomOf="@+id/centerYRow"/>
 
                     <top.defaults.gradientdrawabletuner.ValueRow

@@ -4,11 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/reset"
-        android:title="Reset"
+        android:title="@string/reset"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/code"
+        android:title="@string/code_sign"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/save"
-        android:title="Save"
+        android:title="@string/save"
         android:visible="false"
         app:showAsAction="ifRoom" />
 </menu>

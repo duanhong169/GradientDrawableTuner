@@ -134,7 +134,22 @@ public class GradientDrawableProperties {
         return new int[]{startColor, endColor};
     }
 
-    @AutoProperty public int gradientRadius = 200;
+    static final int RADIUS_TYPE_PIXELS = 0;
+    static final int RADIUS_TYPE_FRACTION = 1;
+    @AutoProperty public int gradientRadiusType = RADIUS_TYPE_PIXELS;
+    @AutoProperty("gradientRadius") private float gradientRadius = 200;
+
+    public int getGradientRadiusInt() {
+        return Math.round(gradientRadius);
+    }
+
+    public float getGradientRadius() {
+        return gradientRadius;
+    }
+
+    public void setGradientRadius(Float gradientRadius) {
+        this.gradientRadius = gradientRadius;
+    }
 
     // width & height set here will be modified to 100 by the data binding's
     // SeekBar during initializing, so we init them again in Activity

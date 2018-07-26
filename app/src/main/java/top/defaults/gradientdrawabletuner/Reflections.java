@@ -18,7 +18,7 @@ class Reflections {
         throw new RuntimeException("GradientState could not be found in current GradientDrawable implementation");
     }
 
-    private static Field resolveField(Class<?> source, String fieldName) throws SecurityException, NoSuchFieldException {
+    static Field resolveField(Class<?> source, String fieldName) throws SecurityException, NoSuchFieldException {
         Field field = source.getDeclaredField(fieldName);
         field.setAccessible(true);
         return field;

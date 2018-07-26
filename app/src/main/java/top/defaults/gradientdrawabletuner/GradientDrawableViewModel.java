@@ -38,7 +38,7 @@ public class GradientDrawableViewModel extends AndroidViewModel {
             drawable.setCornerRadii(properties.getCornerRadii());
             if (properties.useGradient) {
                 drawable.setGradientType(properties.type);
-                drawable.setGradientRadius(properties.gradientRadius);
+                drawable.setGradientRadius(properties.getGradientRadius());
                 drawable.setGradientCenter(properties.centerX, properties.centerY);
                 drawable.setOrientation(properties.getOrientation());
                 drawable.setColors(properties.getColors());

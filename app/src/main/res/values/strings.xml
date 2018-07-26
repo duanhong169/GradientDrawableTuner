@@ -35,4 +35,8 @@
     <string name="dash_width">dashWidth</string>
     <string name="dash_gap">dashGap</string>
     <string name="crafting_shape"><![CDATA[Crafting <shape>]]></string>
+    <string name="reset">Reset</string>
+    <string name="save">Save</string>
+    <string name="code_sign"><![CDATA[</>]]></string>
+    <string name="review_code">Review Code</string>
 </resources>

@@ -1,6 +1,7 @@
 package top.defaults.gradientdrawabletuner;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.GradientDrawable;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(getString(R.string.crafting_shape));
+        ShapeXmlGenerator.init(this);
 
         viewModel = ViewModelProviders.of(this).get(GradientDrawableViewModel.class);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         imageView.post(() -> viewModel.updateProperties(properties -> {
             properties.width = 400;
             properties.height = 400;
-            properties.gradientRadius = 200;
+            properties.setGradientRadius(200f);
         }));
     }
 
@@ -93,6 +95,12 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.reset:
                 viewModel.reset();
+                break;
+            case R.id.code:
+                Intent intent = new Intent(this, XmlCodeViewActivity.class);
+                intent.putExtra(XmlCodeViewActivity.EXTRA_CODE,
+                        ShapeXmlGenerator.shapeXmlString(viewModel.getDrawableProperties().getValue()));
+                startActivity(intent);
                 break;
             case R.id.save:
                 break;
