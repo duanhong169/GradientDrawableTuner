@@ -33,7 +33,7 @@
                 android:layout_centerInParent="true"
                 android:layerType="software"
                 android:src="@{viewModel.gradientDrawable}"
-                android:background="#2f000000"
+                android:background="#22000000"
                 android:contentDescription="@string/drawable_target"/>
         </RelativeLayout>
 
