@@ -54,7 +54,7 @@ public class ShapeXmlGenerator {
                 }
             }
 
-            if (properties.useGradient) {
+            if (properties.shouldEnableGradient()) {
                 Element gradient = root.addElement("gradient");
                 gradient.addAttribute("android:type", nameForGradientType(properties.type));
 
@@ -96,7 +96,7 @@ public class ShapeXmlGenerator {
                 }
             }
 
-            if (!properties.useGradient) {
+            if (!properties.shouldEnableGradient()) {
                 Element solid = root.addElement("solid");
                 solid.addAttribute("android:color", colorHex(properties.solidColor));
             }
