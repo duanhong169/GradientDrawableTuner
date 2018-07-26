@@ -4,8 +4,13 @@ Get confusing about the <shape> drawable in Android? Try playing with `GradientD
 
 [![Get it on Google Play](art/en-play-badge.png)][1]
 
+## Features
+
+* Almost all of the `<shape>`'s properties can be tuned.
+* Generate the xml code which can build the `<shape>` you just crafted.
+
 ## Screen shots
 
-<img src='art/screen-shot-1.png' height='500px'/> <img src='art/screen-shot-2.png' height='500px'/> <img src='art/screen-shot-3.png' height='500px'/> <img src='art/screen-shot-4.png' height='500px'/> <img src='art/screen-video.gif' height='500px'/>
+<img src='art/screen-shot-1.png' height='500px'/> <img src='art/screen-shot-2.png' height='500px'/> <img src='art/screen-shot-3.png' height='500px'/> <img src='art/screen-shot-4.png' height='500px'/> <img src='art/screen-shot-5.png' height='500px'/> <img src='art/screen-video.gif' height='500px'/>
 
  [1]: https://play.google.com/store/apps/details?id=top.defaults.gradientdrawabletuner
