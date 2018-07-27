@@ -21,7 +21,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <top.defaults.gradientdrawabletuner.CheckerboardRelativeLayout
             android:id="@+id/background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                 android:src="@{viewModel.gradientDrawable}"
                 android:background="#22000000"
                 android:contentDescription="@string/drawable_target"/>
-        </RelativeLayout>
+        </top.defaults.gradientdrawabletuner.CheckerboardRelativeLayout>
 
         <ScrollView
             android:layout_width="match_parent"
