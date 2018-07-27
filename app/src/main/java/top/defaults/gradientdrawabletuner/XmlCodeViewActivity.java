@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 
 public class XmlCodeViewActivity extends AppCompatActivity {
 
-    static final String EXTRA_CODE = "extra_code";
+    static final String EXTRA_PROPERTIES = "extra_code";
 
     @BindView(R.id.xmlCodeTextView) TextView xmlCodeTextView;
 
@@ -30,8 +30,8 @@ public class XmlCodeViewActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        String code = getIntent().getStringExtra(EXTRA_CODE);
-        xmlCodeTextView.setText(code);
+        GradientDrawableProperties properties = getIntent().getParcelableExtra(EXTRA_PROPERTIES);
+        xmlCodeTextView.setText(ShapeXmlGenerator.shapeXmlString(properties));
         Typeface typeface = Fonts.getDefault(this);
         if (typeface != null) {
             xmlCodeTextView.setTypeface(typeface);

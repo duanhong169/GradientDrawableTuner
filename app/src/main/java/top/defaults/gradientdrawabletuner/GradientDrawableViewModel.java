@@ -23,32 +23,8 @@ public class GradientDrawableViewModel extends AndroidViewModel {
     public GradientDrawableViewModel(@NonNull Application application) {
         super(application);
         resources = application.getResources();
-        gradientDrawable.addSource(drawableProperties, properties -> {
-            GradientDrawable drawable = new GradientDrawable();
-            if (properties == null) properties = new GradientDrawableProperties();
-
-            drawable.setShape(properties.shape);
-            if (properties.shape == GradientDrawable.RING) {
-                Reflections.setInnerRadius(drawable, properties.innerRadius);
-                Reflections.setInnerRadiusRatio(drawable, properties.innerRadiusRatio);
-                Reflections.setThickness(drawable, properties.thickness);
-                Reflections.setThicknessRatio(drawable, properties.thicknessRatio);
-                Reflections.setUseLevelForShape(drawable, false);
-            }
-            drawable.setCornerRadii(properties.getCornerRadii());
-            if (properties.useGradient) {
-                drawable.setGradientType(properties.type);
-                drawable.setGradientRadius(properties.getGradientRadius());
-                drawable.setGradientCenter(properties.centerX, properties.centerY);
-                drawable.setOrientation(properties.getOrientation());
-                drawable.setColors(properties.getColors());
-            } else {
-                drawable.setColor(properties.solidColor);
-            }
-            drawable.setSize(properties.width + properties.strokeWidth, properties.height + properties.strokeWidth);
-            drawable.setStroke(properties.strokeWidth, properties.strokeColor, properties.dashWidth, properties.dashGap);
-            gradientDrawable.setValue(drawable);
-        });
+        gradientDrawable.addSource(drawableProperties, properties ->
+                gradientDrawable.setValue(new DrawableBuilder().properties(properties).build()));
         reset();
     }
 
@@ -105,13 +81,13 @@ public class GradientDrawableViewModel extends AndroidViewModel {
 
     public void updateProperties(Callback<GradientDrawableProperties> callback) {
         GradientDrawableProperties properties = drawableProperties.getValue();
-        if (properties == null) properties = new GradientDrawableProperties();
+        if (properties == null) properties = GradientDrawableProperties.Factory.createRectangleSample();
         callback.onData(properties);
         drawableProperties.setValue(properties);
     }
 
     public void reset() {
-        drawableProperties.setValue(new GradientDrawableProperties());
+        drawableProperties.setValue(GradientDrawableProperties.Factory.createRectangleSample());
     }
 
     @SuppressWarnings("unused")

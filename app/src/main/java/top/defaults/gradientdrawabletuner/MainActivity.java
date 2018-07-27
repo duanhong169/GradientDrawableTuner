@@ -18,11 +18,9 @@ import android.widget.RelativeLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.defaults.gradientdrawabletuner.databinding.ActivityMainBinding;
-import top.defaults.checkerboarddrawable.CheckerboardDrawable;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.background) View background;
     @BindView(R.id.imageView) ImageView imageView;
     @BindView(R.id.shape) RadioGroup shapeSwitcher;
     @BindView(R.id.cornerRadiusRow) ValueRow cornerRadiusRow;
@@ -39,13 +37,11 @@ public class MainActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(GradientDrawableViewModel.class);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setLifecycleOwner(this);
+        GradientDrawableProperties originProperties = viewModel.getDrawableProperties().getValue();
 
         ButterKnife.bind(this);
 
         Resources resources = getResources();
-        CheckerboardDrawable drawable = new CheckerboardDrawable.Builder()
-                .size(30).build();
-        background.setBackground(drawable);
         shapeSwitcher.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId != R.id.rectangle) {
                 cornerRadiusRow.setExtensionsChecked(false);
@@ -78,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
         // Set initial width/height/gradient-radius here, because data binding's SeekBar will
         // fire a progress update to 100 when initialing
         imageView.post(() -> viewModel.updateProperties(properties -> {
-            properties.width = 400;
-            properties.height = 400;
-            properties.setGradientRadius(200f);
+            properties.width = originProperties.width;
+            properties.height = originProperties.height;
+            properties.setGradientRadius(originProperties.getGradientRadius());
         }));
     }
 
@@ -98,8 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.code:
                 Intent intent = new Intent(this, XmlCodeViewActivity.class);
-                intent.putExtra(XmlCodeViewActivity.EXTRA_CODE,
-                        ShapeXmlGenerator.shapeXmlString(viewModel.getDrawableProperties().getValue()));
+                intent.putExtra(XmlCodeViewActivity.EXTRA_PROPERTIES, viewModel.getDrawableProperties().getValue());
                 startActivity(intent);
                 break;
             case R.id.save:

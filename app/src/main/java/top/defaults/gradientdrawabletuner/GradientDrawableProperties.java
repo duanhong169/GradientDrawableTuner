@@ -1,11 +1,13 @@
 package top.defaults.gradientdrawabletuner;
 
 import android.graphics.drawable.GradientDrawable;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.SparseIntArray;
 
 import top.defaults.annotations.AutoProperty;
 
-public class GradientDrawableProperties {
+public class GradientDrawableProperties implements Parcelable {
 
     private static SparseIntArray shapeToIdMap = new SparseIntArray();
     static {
@@ -23,6 +25,52 @@ public class GradientDrawableProperties {
     }
 
     @AutoProperty("shapeId") public int shape = GradientDrawable.RECTANGLE;
+
+    private GradientDrawableProperties() {}
+
+    private GradientDrawableProperties(Parcel in) {
+        shape = in.readInt();
+        innerRadius = in.readInt();
+        innerRadiusRatio = in.readFloat();
+        thickness = in.readInt();
+        thicknessRatio = in.readFloat();
+        cornerRadius = in.readInt();
+        topLeftRadius = in.readInt();
+        topRightRadius = in.readInt();
+        bottomLeftRadius = in.readInt();
+        bottomRightRadius = in.readInt();
+        type = in.readInt();
+        useGradient = in.readByte() != 0;
+        useCenterColor = in.readByte() != 0;
+        angle = in.readInt();
+        centerX = in.readFloat();
+        centerY = in.readFloat();
+        startColor = in.readInt();
+        centerColor = in.readInt();
+        endColor = in.readInt();
+        gradientRadiusType = in.readInt();
+        gradientRadius = in.readFloat();
+        width = in.readInt();
+        height = in.readInt();
+        solidColor = in.readInt();
+        strokeWidth = in.readInt();
+        strokeColor = in.readInt();
+        dashWidth = in.readInt();
+        dashGap = in.readInt();
+    }
+
+    public static final Creator<GradientDrawableProperties> CREATOR = new Creator<GradientDrawableProperties>() {
+        @Override
+        public GradientDrawableProperties createFromParcel(Parcel in) {
+            return new GradientDrawableProperties(in);
+        }
+
+        @Override
+        public GradientDrawableProperties[] newArray(int size) {
+            return new GradientDrawableProperties[size];
+        }
+    };
+
     public int getShapeId() {
         return shapeToIdMap.get(shape);
     }
@@ -171,5 +219,65 @@ public class GradientDrawableProperties {
 
     public boolean shouldEnableGradientRadius() {
         return type == GradientDrawable.RADIAL_GRADIENT && shouldEnableGradient();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(shape);
+        dest.writeInt(innerRadius);
+        dest.writeFloat(innerRadiusRatio);
+        dest.writeInt(thickness);
+        dest.writeFloat(thicknessRatio);
+        dest.writeInt(cornerRadius);
+        dest.writeInt(topLeftRadius);
+        dest.writeInt(topRightRadius);
+        dest.writeInt(bottomLeftRadius);
+        dest.writeInt(bottomRightRadius);
+        dest.writeInt(type);
+        dest.writeByte((byte) (useGradient ? 1 : 0));
+        dest.writeByte((byte) (useCenterColor ? 1 : 0));
+        dest.writeInt(angle);
+        dest.writeFloat(centerX);
+        dest.writeFloat(centerY);
+        dest.writeInt(startColor);
+        dest.writeInt(centerColor);
+        dest.writeInt(endColor);
+        dest.writeInt(gradientRadiusType);
+        dest.writeFloat(gradientRadius);
+        dest.writeInt(width);
+        dest.writeInt(height);
+        dest.writeInt(solidColor);
+        dest.writeInt(strokeWidth);
+        dest.writeInt(strokeColor);
+        dest.writeInt(dashWidth);
+        dest.writeInt(dashGap);
+    }
+
+    public static class Factory {
+
+        public static GradientDrawableProperties createDefault() {
+            return new GradientDrawableProperties();
+        }
+
+        public static GradientDrawableProperties createRectangleSample() {
+            GradientDrawableProperties properties = new GradientDrawableProperties();
+            properties.shape = GradientDrawable.RECTANGLE;
+            properties.topLeftRadius = 60;
+            properties.topRightRadius = 60;
+            properties.useGradient = true;
+            properties.type = GradientDrawable.RADIAL_GRADIENT;
+            properties.setGradientRadius(520f);
+            properties.centerX = 0.5f;
+            properties.centerY = 1.0f;
+            properties.strokeWidth = 4;
+            properties.dashWidth = 20;
+            properties.dashGap = 12;
+            return properties;
+        }
     }
 }
