@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <HorizontalScrollView
+    <top.defaults.gradientdrawabletuner.GentleHorizontalScrollView
+        android:id="@+id/codeArea"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/code_background"
+        android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
@@ -16,10 +16,10 @@
             android:id="@+id/xmlCodeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textIsSelectable="true"
             android:padding="8dp"
-            android:textColor="@color/code_text_color"
-            android:scrollHorizontally="true"
-            android:scrollbars="horizontal|vertical"/>
-    </HorizontalScrollView>
+            android:background="@color/code_background"
+            android:textColor="@color/code_text_color"/>
+    </top.defaults.gradientdrawabletuner.GentleHorizontalScrollView>
 
 </android.support.constraint.ConstraintLayout>
