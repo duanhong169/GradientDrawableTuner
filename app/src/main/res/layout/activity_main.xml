@@ -21,6 +21,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/code_background"
+            android:textColor="@color/code_text_color"/>
+
         <top.defaults.gradientdrawabletuner.CheckerboardRelativeLayout
             android:id="@+id/background"
             android:layout_width="match_parent"

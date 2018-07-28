@@ -22,6 +22,30 @@ public class DrawableSpec {
         this.properties = properties;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public GradientDrawableProperties getProperties() {
+        return properties;
+    }
+
+    public void setProperties(GradientDrawableProperties properties) {
+        this.properties = properties;
+    }
+
     public static DrawableSpec[] populateData() {
         return new DrawableSpec[]{ DrawableSpecFactory.rectangleSample("Rectangle 1") };
     }

@@ -26,7 +26,16 @@ public class GradientDrawableProperties implements Parcelable {
 
     @AutoProperty("shapeId") public int shape = GradientDrawable.RECTANGLE;
 
-    private GradientDrawableProperties() {}
+    public GradientDrawableProperties() {}
+
+    public GradientDrawableProperties copy() {
+        Parcel parcel = Parcel.obtain();
+        writeToParcel(parcel, 0);
+        parcel.setDataPosition(0);
+        GradientDrawableProperties properties = GradientDrawableProperties.CREATOR.createFromParcel(parcel);
+        parcel.recycle();
+        return properties;
+    }
 
     private GradientDrawableProperties(Parcel in) {
         shape = in.readInt();
@@ -199,8 +208,6 @@ public class GradientDrawableProperties implements Parcelable {
         this.gradientRadius = gradientRadius;
     }
 
-    // width & height set here will be modified to 100 by the data binding's
-    // SeekBar during initializing, so we init them again in Activity
     @AutoProperty public int width = 400;
     @AutoProperty public int height = 400;
     @AutoProperty public int solidColor = 0xFF2DCFCA;

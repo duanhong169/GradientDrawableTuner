@@ -14,19 +14,29 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.defaults.gradientdrawabletuner.databinding.ActivityMainBinding;
+import top.defaults.gradientdrawabletuner.db.AppDatabase;
+import top.defaults.gradientdrawabletuner.db.DrawableSpec;
+import top.defaults.gradientdrawabletuner.db.DrawableSpecFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+    @BindView(R.id.status) TextView status;
     @BindView(R.id.imageView) ImageView imageView;
     @BindView(R.id.shape) RadioGroup shapeSwitcher;
     @BindView(R.id.cornerRadiusRow) ValueRow cornerRadiusRow;
     @BindView(R.id.fourCorners) Group fourCorners;
 
     private GradientDrawableViewModel viewModel;
+    private List<DrawableSpec> drawableSpecs = new ArrayList<>();
+    private DrawableSpec currentDrawableSpec = DrawableSpecFactory.tempSpec();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +47,11 @@ public class MainActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(GradientDrawableViewModel.class);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setLifecycleOwner(this);
-        GradientDrawableProperties originProperties = viewModel.getDrawableProperties().getValue();
+        viewModel.apply(currentDrawableSpec.getProperties());
 
         ButterKnife.bind(this);
 
+        updateStatus();
         Resources resources = getResources();
         shapeSwitcher.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId != R.id.rectangle) {
@@ -71,13 +82,11 @@ public class MainActivity extends AppCompatActivity {
         binding.setMaxHeight(maxHeight);
         binding.setViewModel(viewModel);
 
-        // Set initial width/height/gradient-radius here, because data binding's SeekBar will
-        // fire a progress update to 100 when initialing
-        imageView.post(() -> viewModel.updateProperties(properties -> {
-            properties.width = originProperties.width;
-            properties.height = originProperties.height;
-            properties.setGradientRadius(originProperties.getGradientRadius());
-        }));
+        AppDatabase.getInstance(this).drawableSpecDao().getAll().observe(this, drawableSpecs -> {
+            if (drawableSpecs.size() > 0) {
+                this.drawableSpecs = drawableSpecs;
+            }
+        });
     }
 
     @Override
@@ -90,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.reset:
-                viewModel.reset();
+                viewModel.apply(currentDrawableSpec.getProperties());
                 break;
             case R.id.code:
                 Intent intent = new Intent(this, XmlCodeViewActivity.class);
@@ -101,5 +110,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void updateStatus() {
+        status.setText(String.format("Spec: [%s]", currentDrawableSpec.getName()));
     }
 }

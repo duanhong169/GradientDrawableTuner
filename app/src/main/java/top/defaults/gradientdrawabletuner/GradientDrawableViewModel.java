@@ -25,7 +25,7 @@ public class GradientDrawableViewModel extends AndroidViewModel {
         resources = application.getResources();
         gradientDrawable.addSource(drawableProperties, properties ->
                 gradientDrawable.setValue(new DrawableBuilder().properties(properties).build()));
-        reset();
+        drawableProperties.setValue(GradientDrawableProperties.Factory.createDefault());
     }
 
     public MutableLiveData<GradientDrawable> getGradientDrawable() {
@@ -81,13 +81,13 @@ public class GradientDrawableViewModel extends AndroidViewModel {
 
     public void updateProperties(Callback<GradientDrawableProperties> callback) {
         GradientDrawableProperties properties = drawableProperties.getValue();
-        if (properties == null) properties = GradientDrawableProperties.Factory.createRectangleSample();
+        if (properties == null) properties = GradientDrawableProperties.Factory.createDefault();
         callback.onData(properties);
         drawableProperties.setValue(properties);
     }
 
-    public void reset() {
-        drawableProperties.setValue(GradientDrawableProperties.Factory.createRectangleSample());
+    public void apply(GradientDrawableProperties properties) {
+        drawableProperties.setValue(properties.copy());
     }
 
     @SuppressWarnings("unused")
