@@ -228,6 +228,10 @@ public class GradientDrawableProperties implements Parcelable {
         return type == GradientDrawable.RADIAL_GRADIENT && shouldEnableGradient();
     }
 
+    public GradientDrawable materialization() {
+        return new DrawableBuilder().properties(this).build();
+    }
+
     @Override
     public int describeContents() {
         return 0;

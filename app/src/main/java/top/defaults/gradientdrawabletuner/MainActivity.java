@@ -16,9 +16,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.defaults.gradientdrawabletuner.databinding.ActivityMainBinding;
@@ -28,14 +25,13 @@ import top.defaults.gradientdrawabletuner.db.DrawableSpecFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.status) TextView status;
+    @BindView(R.id.statusTextView) TextView statusTextView;
     @BindView(R.id.imageView) ImageView imageView;
     @BindView(R.id.shape) RadioGroup shapeSwitcher;
     @BindView(R.id.cornerRadiusRow) ValueRow cornerRadiusRow;
     @BindView(R.id.fourCorners) Group fourCorners;
 
     private GradientDrawableViewModel viewModel;
-    private List<DrawableSpec> drawableSpecs = new ArrayList<>();
     private DrawableSpec currentDrawableSpec = DrawableSpecFactory.tempSpec();
 
     @Override
@@ -81,12 +77,6 @@ public class MainActivity extends AppCompatActivity {
         binding.setMaxWidth(maxWidth);
         binding.setMaxHeight(maxHeight);
         binding.setViewModel(viewModel);
-
-        AppDatabase.getInstance(this).drawableSpecDao().getAll().observe(this, drawableSpecs -> {
-            if (drawableSpecs.size() > 0) {
-                this.drawableSpecs = drawableSpecs;
-            }
-        });
     }
 
     @Override
@@ -99,7 +89,15 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.reset:
-                viewModel.apply(currentDrawableSpec.getProperties());
+                AppDatabase.getInstance(this).drawableSpecDao().getAll().observe(this, drawableSpecs -> {
+                    if (drawableSpecs != null && drawableSpecs.size() > 0) {
+                        new DrawableSpecChooser(this, drawableSpecs).show(imageView, drawableSpec -> {
+                            currentDrawableSpec = drawableSpec;
+                            viewModel.apply(currentDrawableSpec.getProperties());
+                            updateStatus();
+                        });
+                    }
+                });
                 break;
             case R.id.code:
                 Intent intent = new Intent(this, XmlCodeViewActivity.class);
@@ -113,6 +111,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateStatus() {
-        status.setText(String.format("Spec: [%s]", currentDrawableSpec.getName()));
+        statusTextView.setText(String.format("Spec: [%s][Edited]", currentDrawableSpec.getName()));
     }
 }

@@ -39,4 +39,6 @@
     <string name="save">Save</string>
     <string name="code_sign"><![CDATA[</>]]></string>
     <string name="review_code">Review Code</string>
+    <string name="choose_a_spec">Choose a spec</string>
+    <string name="cancel">Cancel</string>
 </resources>
