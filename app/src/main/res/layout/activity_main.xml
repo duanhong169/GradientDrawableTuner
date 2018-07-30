@@ -21,13 +21,29 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/statusTextView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:background="@color/code_background"
-            android:textColor="@color/code_text_color"/>
+            android:orientation="horizontal"
+            android:background="#F2F2F2">
+
+            <TextView
+                android:id="@+id/statusTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:textColor="@color/colorPrimaryDark"/>
+
+            <top.defaults.view.TextButton
+                android:id="@+id/reviewCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/review_code"
+                android:textColor="@color/colorPrimaryDark"
+                app:underline="true"/>
+        </LinearLayout>
 
         <top.defaults.gradientdrawabletuner.CheckerboardRelativeLayout
             android:id="@+id/background"

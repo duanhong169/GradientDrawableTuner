@@ -3,30 +3,41 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="8dp">
 
     <TextView
-        android:id="@+id/drawableSpecChooserTitle"
+        android:id="@+id/setNameDialogTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textSize="16sp"
         android:textColor="@color/colorPrimary"
-        android:text="@string/choose_a_spec"
+        android:text="@string/name_the_spec"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/drawableSpecsList"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:inputType="text"
+        android:hint="@string/please_type_the_name"
+        app:layout_constraintTop_toBottomOf="@+id/setNameDialogTitle"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/drawableSpecChooserTitle"
-        app:layout_constraintBottom_toTopOf="@+id/cancel"/>
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <top.defaults.view.TextButton
+        android:id="@+id/ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="@string/ok"
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <top.defaults.view.TextButton
         android:id="@+id/cancel"
@@ -34,7 +45,8 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="@string/cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="@+id/ok"
+        app:layout_constraintTop_toTopOf="@+id/ok"
+        app:layout_constraintRight_toLeftOf="@+id/ok"/>
 
 </android.support.constraint.ConstraintLayout>

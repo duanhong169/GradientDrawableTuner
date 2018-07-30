@@ -3,16 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/reset"
-        android:title="@string/reset"
+        android:id="@+id/newSpec"
+        android:title="@string/new_spec"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/code"
-        android:title="@string/code_sign"
+        android:id="@+id/set"
+        android:title="@string/set"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/save"
         android:title="@string/save"
-        android:visible="false"
         app:showAsAction="ifRoom" />
 </menu>

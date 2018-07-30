@@ -1,10 +1,14 @@
 package top.defaults.gradientdrawabletuner;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.GradientDrawable;
+import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,8 +20,11 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import top.defaults.gradientdrawabletuner.databinding.ActivityMainBinding;
 import top.defaults.gradientdrawabletuner.db.AppDatabase;
 import top.defaults.gradientdrawabletuner.db.DrawableSpec;
@@ -33,12 +40,19 @@ public class MainActivity extends AppCompatActivity {
 
     private GradientDrawableViewModel viewModel;
     private DrawableSpec currentDrawableSpec = DrawableSpecFactory.tempSpec();
+    private MutableLiveData<Boolean> isEdited = new MutableLiveData<>();
+
+    @OnClick(R.id.reviewCode)
+    void reviewCode() {
+        Intent intent = new Intent(this, XmlCodeViewActivity.class);
+        intent.putExtra(XmlCodeViewActivity.EXTRA_PROPERTIES, viewModel.getDrawableProperties().getValue());
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(getString(R.string.crafting_shape));
-        ShapeXmlGenerator.init(this);
 
         viewModel = ViewModelProviders.of(this).get(GradientDrawableViewModel.class);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
@@ -47,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        updateStatus();
         Resources resources = getResources();
         shapeSwitcher.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId != R.id.rectangle) {
@@ -69,8 +82,13 @@ public class MainActivity extends AppCompatActivity {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
                 params.addRule(RelativeLayout.CENTER_IN_PARENT);
                 imageView.setLayoutParams(params);
+
+                isEdited.setValue(currentDrawableSpec.getId() == 0
+                        || !properties.equals(currentDrawableSpec.getProperties()));
             }
         });
+
+        isEdited.observe(this, status -> updateStatus());
 
         final int maxWidth = (int) (resources.getDisplayMetrics().widthPixels / 1.5);
         final int maxHeight = (int) (resources.getDisplayMetrics().heightPixels / 2.5);
@@ -88,29 +106,51 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.reset:
-                AppDatabase.getInstance(this).drawableSpecDao().getAll().observe(this, drawableSpecs -> {
-                    if (drawableSpecs != null && drawableSpecs.size() > 0) {
-                        new DrawableSpecChooser(this, drawableSpecs).show(imageView, drawableSpec -> {
-                            currentDrawableSpec = drawableSpec;
-                            viewModel.apply(currentDrawableSpec.getProperties());
-                            updateStatus();
-                        });
+            case R.id.newSpec:
+                currentDrawableSpec = DrawableSpecFactory.tempSpec();
+                viewModel.apply(currentDrawableSpec.getProperties());
+                isEdited.setValue(true);
+                break;
+            case R.id.set:
+                LiveData<List<DrawableSpec>> liveData = AppDatabase.getInstance(this).drawableSpecDao().getAll();
+                liveData.observe(this, new Observer<List<DrawableSpec>>() {
+                    @Override
+                    public void onChanged(@Nullable List<DrawableSpec> drawableSpecs) {
+                        if (drawableSpecs != null && drawableSpecs.size() > 0) {
+                            new DrawableSpecChooser(MainActivity.this, drawableSpecs).show(imageView, drawableSpec -> {
+                                currentDrawableSpec = drawableSpec;
+                                viewModel.apply(currentDrawableSpec.getProperties());
+                                isEdited.setValue(false);
+                            });
+                        }
+                        liveData.removeObserver(this);
                     }
                 });
                 break;
-            case R.id.code:
-                Intent intent = new Intent(this, XmlCodeViewActivity.class);
-                intent.putExtra(XmlCodeViewActivity.EXTRA_PROPERTIES, viewModel.getDrawableProperties().getValue());
-                startActivity(intent);
-                break;
             case R.id.save:
+                currentDrawableSpec.setProperties(viewModel.getDrawableProperties().getValue());
+                if (currentDrawableSpec.getId() == 0) {
+                    SetNameDialogFragment setNameDialogFragment = new SetNameDialogFragment();
+                    setNameDialogFragment.setCallback(name -> AppDatabase.execute(() -> {
+                        currentDrawableSpec.setName(name);
+                        long id = AppDatabase.getInstance(this).drawableSpecDao().insert(currentDrawableSpec);
+                        currentDrawableSpec = AppDatabase.getInstance(this).drawableSpecDao().findById(id);
+                        isEdited.postValue(false);
+                    }));
+                    setNameDialogFragment.show(getSupportFragmentManager(), "setName");
+                } else {
+                    AppDatabase.execute(() -> {
+                        AppDatabase.getInstance(this).drawableSpecDao().update(currentDrawableSpec);
+                        isEdited.postValue(false);
+                    });
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void updateStatus() {
-        statusTextView.setText(String.format("Spec: [%s][Edited]", currentDrawableSpec.getName()));
+        statusTextView.setText(String.format("Spec: [%s]%s", currentDrawableSpec.getName(),
+                isEdited.getValue() == null || isEdited.getValue() ? " - [Unsaved]" : ""));
     }
 }

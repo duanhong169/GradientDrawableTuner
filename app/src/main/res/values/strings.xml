@@ -35,10 +35,14 @@
     <string name="dash_width">dashWidth</string>
     <string name="dash_gap">dashGap</string>
     <string name="crafting_shape"><![CDATA[Crafting <shape>]]></string>
-    <string name="reset">Reset</string>
+    <string name="set">Set</string>
     <string name="save">Save</string>
     <string name="code_sign"><![CDATA[</>]]></string>
+    <string name="new_spec">New</string>
     <string name="review_code">Review Code</string>
     <string name="choose_a_spec">Choose a spec</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="please_type_the_name">Please type the name</string>
+    <string name="name_the_spec">Name the spec</string>
 </resources>

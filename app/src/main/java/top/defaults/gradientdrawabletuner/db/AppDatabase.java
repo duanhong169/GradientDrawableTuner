@@ -7,10 +7,13 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 @Database(entities = {DrawableSpec.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
+
+    private static Executor executor = Executors.newSingleThreadScheduledExecutor();
 
     public abstract DrawableSpecDao drawableSpecDao();
 
@@ -26,8 +29,7 @@ public abstract class AppDatabase extends RoomDatabase {
                                 @Override
                                 public void onCreate(@NonNull SupportSQLiteDatabase db) {
                                     super.onCreate(db);
-                                    Executors.newSingleThreadScheduledExecutor().execute(() ->
-                                            getInstance(context).drawableSpecDao().insert(DrawableSpec.populateData()));
+                                    execute(() -> getInstance(context).drawableSpecDao().insertAll(DrawableSpec.populateData()));
                                 }
                             })
                             .build();
@@ -35,5 +37,13 @@ public abstract class AppDatabase extends RoomDatabase {
             }
         }
         return instance;
+    }
+
+    public interface ExecutorCallback {
+        void onExecute();
+    }
+
+    public static void execute(ExecutorCallback callback) {
+        executor.execute(callback::onExecute);
     }
 }

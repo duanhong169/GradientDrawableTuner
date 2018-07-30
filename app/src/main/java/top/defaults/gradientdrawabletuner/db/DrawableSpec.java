@@ -9,7 +9,7 @@ import top.defaults.gradientdrawabletuner.GradientDrawableProperties;
 @Entity(tableName = "drawable_spec")
 public class DrawableSpec {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
     private String name;
@@ -47,6 +47,8 @@ public class DrawableSpec {
     }
 
     public static DrawableSpec[] populateData() {
-        return new DrawableSpec[]{ DrawableSpecFactory.rectangleSample("Rectangle 1") };
+        return new DrawableSpec[]{
+                DrawableSpecFactory.rectangleSample("Rectangle"),
+        };
     }
 }

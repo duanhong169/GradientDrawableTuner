@@ -16,7 +16,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layerType="software"
-            android:background="#22000000"
             android:contentDescription="@string/drawable_target"/>
 
     </top.defaults.gradientdrawabletuner.CheckerboardRelativeLayout>

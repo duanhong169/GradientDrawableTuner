@@ -58,6 +58,7 @@ dependencies {
     annotationProcessor project(':compiler')
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
     testImplementation 'junit:junit:4.12'
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }

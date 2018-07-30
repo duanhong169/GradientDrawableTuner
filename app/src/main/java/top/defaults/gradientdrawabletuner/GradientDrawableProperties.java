@@ -269,6 +269,41 @@ public class GradientDrawableProperties implements Parcelable {
         dest.writeInt(dashGap);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GradientDrawableProperties that = (GradientDrawableProperties) o;
+        return shape == that.shape &&
+                innerRadius == that.innerRadius &&
+                Float.compare(that.innerRadiusRatio, innerRadiusRatio) == 0 &&
+                thickness == that.thickness &&
+                Float.compare(that.thicknessRatio, thicknessRatio) == 0 &&
+                cornerRadius == that.cornerRadius &&
+                topLeftRadius == that.topLeftRadius &&
+                topRightRadius == that.topRightRadius &&
+                bottomLeftRadius == that.bottomLeftRadius &&
+                bottomRightRadius == that.bottomRightRadius &&
+                type == that.type &&
+                useGradient == that.useGradient &&
+                useCenterColor == that.useCenterColor &&
+                angle == that.angle &&
+                Float.compare(that.centerX, centerX) == 0 &&
+                Float.compare(that.centerY, centerY) == 0 &&
+                startColor == that.startColor &&
+                centerColor == that.centerColor &&
+                endColor == that.endColor &&
+                gradientRadiusType == that.gradientRadiusType &&
+                Float.compare(that.gradientRadius, gradientRadius) == 0 &&
+                width == that.width &&
+                height == that.height &&
+                solidColor == that.solidColor &&
+                strokeWidth == that.strokeWidth &&
+                strokeColor == that.strokeColor &&
+                dashWidth == that.dashWidth &&
+                dashGap == that.dashGap;
+    }
+
     public static class Factory {
 
         public static GradientDrawableProperties createDefault() {

@@ -19,10 +19,13 @@ public interface DrawableSpecDao {
     LiveData<List<DrawableSpec>> getAll();
 
     @Query("SELECT * FROM drawable_spec WHERE id = (:id)")
-    LiveData<DrawableSpec> findById(int id);
+    DrawableSpec findById(long id);
 
     @Insert(onConflict = IGNORE)
-    void insert(DrawableSpec... drawableSpec);
+    void insertAll(DrawableSpec... drawableSpec);
+
+    @Insert(onConflict = IGNORE)
+    long insert(DrawableSpec drawableSpec);
 
     @Update(onConflict = REPLACE)
     void update(DrawableSpec drawableSpec);

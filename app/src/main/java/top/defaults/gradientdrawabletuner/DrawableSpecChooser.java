@@ -36,8 +36,9 @@ public class DrawableSpecChooser {
         @SuppressLint("InflateParams")
         View layout = inflater.inflate(R.layout.popup_drawable_spec_chooser, null);
 
+        int height = (int) (context.getResources().getDisplayMetrics().heightPixels * 0.75);
         final PopupWindow popupWindow = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
+                height);
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         popupWindow.setOutsideTouchable(true);
         layout.findViewById(R.id.cancel).setOnClickListener(v -> popupWindow.dismiss());
