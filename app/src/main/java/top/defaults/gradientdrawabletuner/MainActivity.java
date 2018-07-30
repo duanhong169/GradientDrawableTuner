@@ -10,8 +10,12 @@ import android.databinding.DataBindingUtil;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -150,7 +154,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateStatus() {
-        statusTextView.setText(String.format("Spec: [%s]%s", currentDrawableSpec.getName(),
-                isEdited.getValue() == null || isEdited.getValue() ? " - [Unsaved]" : ""));
+        if (isEdited.getValue() == null || isEdited.getValue()) {
+            SpannableString status = new SpannableString(String.format("Spec: [%s] - [Unsaved]", currentDrawableSpec.getName()));
+            int start = "Spec: []".length() + currentDrawableSpec.getName().length();
+            status.setSpan(new ForegroundColorSpan(
+                    ContextCompat.getColor(this, R.color.status_unsaved_color)),
+                    start, status.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            statusTextView.setText(status);
+        } else {
+            statusTextView.setText(String.format("Spec: [%s]", currentDrawableSpec.getName()));
+        }
     }
 }

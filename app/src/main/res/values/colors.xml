@@ -5,4 +5,5 @@
     <color name="colorAccent">#2DCFCA</color>
     <color name="code_background">#002833</color>
     <color name="code_text_color">#839495</color>
+    <color name="status_unsaved_color">#F44336</color>
 </resources>
