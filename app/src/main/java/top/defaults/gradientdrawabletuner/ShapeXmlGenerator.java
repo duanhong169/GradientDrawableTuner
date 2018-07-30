@@ -34,6 +34,19 @@ public class ShapeXmlGenerator {
             Element root = document.addElement("shape")
                     .addAttribute("xmlns:android", "http://schemas.android.com/apk/res/android")
                     .addAttribute("android:shape", nameForShape(properties.shape));
+            if (properties.shape == GradientDrawable.RING) {
+                if (properties.innerRadius != -1) {
+                    root.addAttribute("android:innerRadius", stringOf(properties.innerRadius));
+                } else if (properties.innerRadiusRatio != 9) {
+                    root.addAttribute("android:innerRadiusRatio", String.valueOf((properties.innerRadiusRatio)));
+                }
+                if (properties.thickness != -1) {
+                    root.addAttribute("android:thickness", stringOf(properties.thickness));
+                } else if (properties.thicknessRatio != 3) {
+                    root.addAttribute("android:thicknessRatio", String.valueOf((properties.thicknessRatio)));
+                }
+                root.addAttribute("android:useLevel", "false");
+            }
             if (hasRadius(properties)) {
                 Element corners = root.addElement("corners");
                 if (isCornerRadiusEven(properties)) {
