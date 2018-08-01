@@ -33,7 +33,7 @@ public class DrawableBuilder {
         } else {
             drawable.setColor(properties.solidColor);
         }
-        drawable.setSize(properties.width + properties.strokeWidth, properties.height + properties.strokeWidth);
+        drawable.setSize(properties.width, properties.height);
         drawable.setStroke(properties.strokeWidth, properties.strokeColor, properties.dashWidth, properties.dashGap);
         return drawable;
     }
