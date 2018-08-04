@@ -5,8 +5,8 @@ Get confusing about the <shape> drawable in Android? Try playing with `GradientD
 [<img src="art/en-play-badge.png"
       alt="Download from Google Play"
       height="80">](https://play.google.com/store/apps/details?id=top.defaults.gradientdrawabletuner)
-[<img src="art/direct-apk-download.png"
-      alt="Direct apk download"
+[<img src="art/github.png"
+      alt="Download from GitHub"
       height="80">](https://github.com/duanhong169/GradientDrawableTuner/releases/latest)
 
 ## Features
