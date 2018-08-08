@@ -53,7 +53,7 @@ dependencies {
     implementation 'org.dom4j:dom4j:2.1.1'
     implementation 'com.github.duanhong169:colorpicker:1.1.1'
     implementation 'com.github.duanhong169:checkerboarddrawable:1.0.2'
-    implementation 'com.github.duanhong169:text-button:1.0.4'
+    implementation 'com.github.duanhong169:text-button:1.0.5'
     implementation project(':annotations')
     annotationProcessor project(':compiler')
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'

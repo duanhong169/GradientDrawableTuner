@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:adjustViewBounds="true"
             android:layerType="software"
             android:contentDescription="@string/drawable_target"/>
 
