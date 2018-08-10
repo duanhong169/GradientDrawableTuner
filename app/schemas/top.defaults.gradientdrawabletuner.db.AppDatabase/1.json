@@ -1,0 +1,207 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "2b2e57dce4250a56a267c8f2cfd4d843",
+    "entities": [
+      {
+        "tableName": "drawable_spec",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `shape` INTEGER, `innerRadius` INTEGER, `innerRadiusRatio` REAL, `thickness` INTEGER, `thicknessRatio` REAL, `cornerRadius` INTEGER, `topLeftRadius` INTEGER, `topRightRadius` INTEGER, `bottomLeftRadius` INTEGER, `bottomRightRadius` INTEGER, `type` INTEGER, `useGradient` INTEGER, `useCenterColor` INTEGER, `angle` INTEGER, `centerX` REAL, `centerY` REAL, `startColor` INTEGER, `centerColor` INTEGER, `endColor` INTEGER, `gradientRadiusType` INTEGER, `gradientRadius` REAL, `width` INTEGER, `height` INTEGER, `solidColor` INTEGER, `strokeWidth` INTEGER, `strokeColor` INTEGER, `dashWidth` INTEGER, `dashGap` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.shape",
+            "columnName": "shape",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.innerRadius",
+            "columnName": "innerRadius",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.innerRadiusRatio",
+            "columnName": "innerRadiusRatio",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.thickness",
+            "columnName": "thickness",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.thicknessRatio",
+            "columnName": "thicknessRatio",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.cornerRadius",
+            "columnName": "cornerRadius",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.topLeftRadius",
+            "columnName": "topLeftRadius",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.topRightRadius",
+            "columnName": "topRightRadius",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.bottomLeftRadius",
+            "columnName": "bottomLeftRadius",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.bottomRightRadius",
+            "columnName": "bottomRightRadius",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.type",
+            "columnName": "type",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.useGradient",
+            "columnName": "useGradient",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.useCenterColor",
+            "columnName": "useCenterColor",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.angle",
+            "columnName": "angle",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.centerX",
+            "columnName": "centerX",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.centerY",
+            "columnName": "centerY",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.startColor",
+            "columnName": "startColor",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.centerColor",
+            "columnName": "centerColor",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.endColor",
+            "columnName": "endColor",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.gradientRadiusType",
+            "columnName": "gradientRadiusType",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.gradientRadius",
+            "columnName": "gradientRadius",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.width",
+            "columnName": "width",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.height",
+            "columnName": "height",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.solidColor",
+            "columnName": "solidColor",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.strokeWidth",
+            "columnName": "strokeWidth",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.strokeColor",
+            "columnName": "strokeColor",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.dashWidth",
+            "columnName": "dashWidth",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "properties.dashGap",
+            "columnName": "dashGap",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"2b2e57dce4250a56a267c8f2cfd4d843\")"
+    ]
+  }
+}

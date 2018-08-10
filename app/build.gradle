@@ -9,6 +9,12 @@ android {
         versionCode 3
         versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -54,6 +60,7 @@ dependencies {
     implementation 'com.github.duanhong169:colorpicker:1.1.1'
     implementation 'com.github.duanhong169:checkerboarddrawable:1.0.2'
     implementation 'com.github.duanhong169:text-button:1.0.5'
+    implementation 'com.github.duanhong169:drawabletoolbox:1.0.4'
     implementation project(':annotations')
     annotationProcessor project(':compiler')
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
