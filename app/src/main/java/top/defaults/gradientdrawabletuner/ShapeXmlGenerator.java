@@ -15,7 +15,9 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Locale;
 
-import static top.defaults.gradientdrawabletuner.GradientDrawableProperties.RADIUS_TYPE_PIXELS;
+import top.defaults.gradientdrawabletuner.db.DrawablePropertiesInRoom;
+
+import static top.defaults.drawabletoolbox.DrawableProperties.RADIUS_TYPE_PIXELS;
 
 public class ShapeXmlGenerator {
 
@@ -25,7 +27,7 @@ public class ShapeXmlGenerator {
         density = context.getResources().getDisplayMetrics().density;
     }
 
-    public static String shapeXmlString(@Nullable GradientDrawableProperties properties) {
+    public static String shapeXmlString(@Nullable DrawablePropertiesInRoom properties) {
         if (properties == null) {
             return "Null properties";
         }
@@ -87,7 +89,7 @@ public class ShapeXmlGenerator {
 
                 if (properties.type == GradientDrawable.RADIAL_GRADIENT) {
                     if (properties.gradientRadiusType == RADIUS_TYPE_PIXELS) {
-                        gradient.addAttribute("android:gradientRadius", stringOf(properties.getGradientRadiusInt()));
+                        gradient.addAttribute("android:gradientRadius", stringOf((int) properties.gradientRadius));
                     }
                 }
 
@@ -159,11 +161,11 @@ public class ShapeXmlGenerator {
         }
     }
 
-    private static boolean hasRadius(GradientDrawableProperties properties) {
+    private static boolean hasRadius(DrawablePropertiesInRoom properties) {
         return !(properties.getCornerRadius() == 0 && isCornerRadiusEven(properties));
     }
 
-    private static boolean isCornerRadiusEven(GradientDrawableProperties properties) {
+    private static boolean isCornerRadiusEven(DrawablePropertiesInRoom properties) {
         int cornerRadius = properties.getCornerRadius();
         return cornerRadius == properties.topLeftRadius &&
                 cornerRadius == properties.topRightRadius &&

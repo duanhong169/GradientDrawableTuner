@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.cornerRadiusRow) ValueRow cornerRadiusRow;
     @BindView(R.id.fourCorners) Group fourCorners;
 
-    private GradientDrawableViewModel viewModel;
+    private DrawableViewModel viewModel;
     private DrawableSpec currentDrawableSpec = DrawableSpecFactory.tempSpec();
     private MutableLiveData<Boolean> isEdited = new MutableLiveData<>();
 
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTitle(getString(R.string.crafting_shape));
 
-        viewModel = ViewModelProviders.of(this).get(GradientDrawableViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(DrawableViewModel.class);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setLifecycleOwner(this);
         viewModel.apply(currentDrawableSpec.getProperties());

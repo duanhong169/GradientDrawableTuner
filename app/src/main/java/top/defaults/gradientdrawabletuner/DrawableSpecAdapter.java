@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import top.defaults.drawabletoolbox.DrawableProperties;
 import top.defaults.gradientdrawabletuner.db.DrawableSpec;
 
 public class DrawableSpecAdapter extends RecyclerView.Adapter<DrawableSpecAdapter.ViewHolder> {
@@ -31,7 +32,8 @@ public class DrawableSpecAdapter extends RecyclerView.Adapter<DrawableSpecAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DrawableSpec drawableSpec = drawableSpecList.get(position);
         holder.nameTextView.setText(drawableSpec.getName());
-        holder.imageView.setImageDrawable(drawableSpec.getProperties().materialization());
+        DrawableProperties properties = PropertiesExchange.fromRoom(drawableSpec.getProperties());
+        holder.imageView.setImageDrawable(properties.materialization());
     }
 
     @Override

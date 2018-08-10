@@ -5,7 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.res.Resources;
-import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -14,25 +14,33 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class GradientDrawableViewModel extends AndroidViewModel {
+import top.defaults.drawabletoolbox.DrawableBuilder;
+import top.defaults.gradientdrawabletuner.db.DrawablePropertiesInRoom;
+
+public class DrawableViewModel extends AndroidViewModel {
 
     private Resources resources;
-    private MediatorLiveData<GradientDrawable> gradientDrawable = new MediatorLiveData<>();
-    private MutableLiveData<GradientDrawableProperties> drawableProperties = new MutableLiveData<>();
+    private MediatorLiveData<Drawable> drawable = new MediatorLiveData<>();
+    private MutableLiveData<DrawablePropertiesInRoom> drawableProperties = new MutableLiveData<>();
 
-    public GradientDrawableViewModel(@NonNull Application application) {
+    public DrawableViewModel(@NonNull Application application) {
         super(application);
         resources = application.getResources();
-        gradientDrawable.addSource(drawableProperties, properties ->
-                gradientDrawable.setValue(new DrawableBuilder().properties(properties).build()));
-        drawableProperties.setValue(GradientDrawableProperties.Factory.createDefault());
+        drawable.addSource(drawableProperties, properties -> {
+            if (properties != null) {
+                drawable.setValue(new DrawableBuilder()
+                        .batch(PropertiesExchange.fromRoom(properties))
+                        .build());
+            }
+        });
+        drawableProperties.setValue(DrawablePropertiesFactory.createDefault());
     }
 
-    public MutableLiveData<GradientDrawable> getGradientDrawable() {
-        return gradientDrawable;
+    public MutableLiveData<Drawable> getDrawable() {
+        return drawable;
     }
 
-    public MutableLiveData<GradientDrawableProperties> getDrawableProperties() {
+    public MutableLiveData<DrawablePropertiesInRoom> getDrawableProperties() {
         return drawableProperties;
     }
 
@@ -49,7 +57,7 @@ public class GradientDrawableViewModel extends AndroidViewModel {
     }
 
     private void tryField(String propertyName, Object value) throws NoSuchFieldException {
-        Field field = GradientDrawableProperties.class.getField(propertyName);
+        Field field = DrawablePropertiesInRoom.class.getField(propertyName);
         updateProperties(properties -> {
             try {
                 field.set(properties, value);
@@ -61,7 +69,7 @@ public class GradientDrawableViewModel extends AndroidViewModel {
 
     private void trySetter(String propertyName, Object value) {
         try {
-            Method method = GradientDrawableProperties.class.getMethod(setter(propertyName), value.getClass());
+            Method method = DrawablePropertiesInRoom.class.getMethod(setter(propertyName), value.getClass());
             updateProperties(properties -> {
                 try {
                     method.invoke(properties, value);
@@ -79,14 +87,14 @@ public class GradientDrawableViewModel extends AndroidViewModel {
         return "set" + (field.substring(0, 1).toUpperCase() + field.substring(1));
     }
 
-    public void updateProperties(Callback<GradientDrawableProperties> callback) {
-        GradientDrawableProperties properties = drawableProperties.getValue();
-        if (properties == null) properties = GradientDrawableProperties.Factory.createDefault();
+    private void updateProperties(Callback<DrawablePropertiesInRoom> callback) {
+        DrawablePropertiesInRoom properties = drawableProperties.getValue();
+        if (properties == null) properties = DrawablePropertiesFactory.createDefault();
         callback.onData(properties);
         drawableProperties.setValue(properties);
     }
 
-    public void apply(GradientDrawableProperties properties) {
+    public void apply(DrawablePropertiesInRoom properties) {
         drawableProperties.setValue(properties.copy());
     }
 

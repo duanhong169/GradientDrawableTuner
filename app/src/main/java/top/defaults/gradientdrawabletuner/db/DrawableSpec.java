@@ -4,8 +4,6 @@ import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-import top.defaults.gradientdrawabletuner.GradientDrawableProperties;
-
 @Entity(tableName = "drawable_spec")
 public class DrawableSpec {
 
@@ -15,9 +13,9 @@ public class DrawableSpec {
     private String name;
 
     @Embedded
-    private GradientDrawableProperties properties;
+    private DrawablePropertiesInRoom properties;
 
-    DrawableSpec(String name, GradientDrawableProperties properties) {
+    DrawableSpec(String name, DrawablePropertiesInRoom properties) {
         this.name = name;
         this.properties = properties;
     }
@@ -38,12 +36,12 @@ public class DrawableSpec {
         this.name = name;
     }
 
-    public GradientDrawableProperties getProperties() {
+    public DrawablePropertiesInRoom getProperties() {
         return properties;
     }
 
-    public void setProperties(GradientDrawableProperties properties) {
-        this.properties = properties;
+    public void setProperties(DrawablePropertiesInRoom propertiesInRoom) {
+        this.properties = propertiesInRoom;
     }
 
     public static DrawableSpec[] populateData() {

@@ -5,9 +5,10 @@
     <data>
         <import type="android.view.View"/>
         <import type="top.defaults.gradientdrawabletuner.R"/>
+        <import type="java.lang.Math"/>
         <variable
             name="viewModel"
-            type="top.defaults.gradientdrawabletuner.GradientDrawableViewModel"/>
+            type="top.defaults.gradientdrawabletuner.DrawableViewModel"/>
         <variable
             name="maxWidth"
             type="Integer"/>
@@ -56,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layerType="software"
-                android:src="@{viewModel.gradientDrawable}"
+                android:src="@{viewModel.drawable}"
                 android:background="#22000000"
                 android:contentDescription="@string/drawable_target"/>
         </top.defaults.gradientdrawabletuner.CheckerboardRelativeLayout>
@@ -313,9 +314,9 @@
                         android:layout_height="wrap_content"
                         android:visibility="@{viewModel.drawableProperties.shouldEnableGradientRadius() ? View.VISIBLE : View.GONE}"
                         app:title="@string/gradient_radius"
-                        app:valueForTitle="@{viewModel.drawableProperties.gradientRadiusInt}"
+                        app:valueForTitle="@{Math.round(viewModel.drawableProperties.gradientRadius)}"
                         app:max="@{safeUnbox(maxHeight) > safeUnbox(maxWidth) ? safeUnbox(maxHeight) : safeUnbox(maxWidth)}"
-                        app:value="@{viewModel.drawableProperties.gradientRadiusInt}"
+                        app:value="@{Math.round(viewModel.drawableProperties.gradientRadius)}"
                         app:onValueChange='@{(valueRow, value) -> viewModel.updateProperty("gradientRadius", (float)value)}'
                         app:layout_constraintTop_toBottomOf="@+id/centerYRow"/>
 

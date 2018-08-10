@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import top.defaults.gradientdrawabletuner.db.DrawablePropertiesInRoom;
 
 public class XmlCodeViewActivity extends AppCompatActivity {
 
@@ -30,7 +31,7 @@ public class XmlCodeViewActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        GradientDrawableProperties properties = getIntent().getParcelableExtra(EXTRA_PROPERTIES);
+        DrawablePropertiesInRoom properties = getIntent().getParcelableExtra(EXTRA_PROPERTIES);
         xmlCodeTextView.setText(ShapeXmlGenerator.shapeXmlString(properties));
         Typeface typeface = Fonts.getDefault(this);
         if (typeface != null) {

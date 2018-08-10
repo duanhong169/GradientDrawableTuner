@@ -1,16 +1,16 @@
 package top.defaults.gradientdrawabletuner.db;
 
-import top.defaults.gradientdrawabletuner.GradientDrawableProperties;
+import top.defaults.gradientdrawabletuner.DrawablePropertiesFactory;
 
 public class DrawableSpecFactory {
 
     public static DrawableSpec tempSpec() {
-        GradientDrawableProperties properties = GradientDrawableProperties.Factory.createDefault();
+        DrawablePropertiesInRoom properties = DrawablePropertiesFactory.createDefault();
         return new DrawableSpec("Untitled", properties);
     }
 
     public static DrawableSpec rectangleSample(String name) {
-        GradientDrawableProperties properties = GradientDrawableProperties.Factory.createRectangleSample();
+        DrawablePropertiesInRoom properties = DrawablePropertiesFactory.createRectangleSample();
         return new DrawableSpec(name, properties);
     }
 }
