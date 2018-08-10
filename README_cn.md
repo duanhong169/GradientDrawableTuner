@@ -1,9 +1,8 @@
 # GradientDrawableTuner [![gitHub release](https://img.shields.io/github/release/duanhong169/GradientDrawableTuner.svg?style=social)](https://github.com/duanhong169/GradientDrawableTuner/releases) [![Travis CI](https://travis-ci.com/duanhong169/GradientDrawableTuner.svg?branch=master)](https://travis-ci.com/duanhong169/GradientDrawableTuner) [![license](https://img.shields.io/badge/license-Apache%202-green.svg)](https://github.com/duanhong169/GradientDrawableTuner/blob/master/LICENSE)
 
-English | [中文](README_cn.md)
+[English](README.md) | 中文
 
-Get confusing about the <shape> drawable in Android? Try playing with `GradientDrawableTuner`! With the `GradientDrawableTuner`, you can see how the properties of `GradientDrawable` affect the Drawable's appearance, intuitively.
-The `GradientDrawableTuner` also support to generate the corresponding xml code.
+无法清楚的理解<shape>中各种属性的含义吗？通过使用`GradientDrawableTuner`，你可以通过调节和设置各种属性值并实时、直观地预览<shape>的实际效果。`GradientDrawableTuner`还提供了生成对应的xml代码的功能。
 
 [<img src="art/en-play-badge.png"
       alt="Download from Google Play"
@@ -12,16 +11,16 @@ The `GradientDrawableTuner` also support to generate the corresponding xml code.
       alt="Download from GitHub"
       height="80">](https://github.com/duanhong169/GradientDrawableTuner/releases/latest)
 
-## Features
+## 特性
 
-* Almost all of the `<shape>`'s properties can be tuned.
-* Generate the xml code which can build the `<shape>` you just crafted.
+* 几乎支持调节`<shape>`的所有属性
+* 生成当前<shape>所对应的xml代码
 
-## Screen shots
+## 屏幕截图
 
 <img src='art/screen-shot-1.png' height='500px'/> <img src='art/screen-shot-2.png' height='500px'/> <img src='art/screen-shot-3.png' height='500px'/> <img src='art/screen-shot-4.png' height='500px'/> <img src='art/screen-shot-5.png' height='500px'/> <img src='art/screen-video.gif' height='500px'/>
 
-## Libraries
+## 相关库列表
 
 * [DrawableToolbox](https://github.com/duanhong169/DrawableToolbox)
 * [ColorPicker](https://github.com/duanhong169/ColorPicker)
